@@ -1,0 +1,17 @@
+.gitignore
+.editorconfig
+
+LICENSE
+
+schema.md
+README.md
+
+.htaccess.sample
+config.sample.php
+
+bitbucket-pipelines.yml
+package.json
+gulpfile.js
+
+themes/app/source/*
+themes/app/dist/css/less.css

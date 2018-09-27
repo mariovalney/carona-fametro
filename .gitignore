@@ -1,0 +1,9 @@
+node_modules
+
+*.log
+config.php
+
+themes/*/dist/**
+!themes/*/dist/images
+
+.htaccess
