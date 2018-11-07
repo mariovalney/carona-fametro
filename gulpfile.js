@@ -36,7 +36,12 @@ function less_to_css() {
 
 function css_to_dist() {
     return gulp.src([
-        'node_modules/bootstrap/dist/css/bootstrap.css',
+        theme_source_dir + 'css/vendor/bootstrap.css',
+        theme_source_dir + 'css/vendor/slick.css',
+        theme_source_dir + 'css/vendor/slick-theme.css',
+        theme_source_dir + 'css/vendor/helpers.css',
+        theme_source_dir + 'css/vendor/style.css',
+        theme_source_dir + 'css/vendor/landing-2.css',
         theme_dist_dir + 'css/less.css',
     ])
     .pipe(concat('styles.css'))
@@ -55,9 +60,12 @@ gulp.task('styles', gulp.series(less_to_css, css_to_dist));
 
 var js_files = [
     'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap/dist/js/bootstrap.js',
+    theme_source_dir + 'js/vendor/popper.min.js',
+    theme_source_dir + 'js/vendor/bootstrap.min.js',
+    theme_source_dir + 'js/vendor/*.js',
     theme_source_dir + 'js/**/*.js',
     '!'+ theme_source_dir + 'js/ready.js',
+    theme_source_dir + 'js/landing.js',
     theme_source_dir + 'js/ready.js',
 ];
 
@@ -85,6 +93,7 @@ function watch_changes() {
         notify: false,
     });
 
+    gulp.watch(theme_source_dir + 'css/**/*.css', gulp.series('styles'));
     gulp.watch(theme_source_dir + 'less/**/*.less', gulp.series('styles'));
     gulp.watch(theme_source_dir + 'js/**/*.js', gulp.series('scripts'));
 }
