@@ -62,6 +62,10 @@ Crie também o arquivo de configuração `config.php` e adicione ao lado do `doc
 
 Agora basta rodar o comando `docker-compose up` que a imagem será criada. Crie um host para o site.
 
+### Desenvolvimento
+
+Rode `npm install` e `composer install`.
+
 ### Problemas?
 
 Se tiver problemas com permissão de pasta, não esqueça de adicionar o seu usuário ao grupo `www-data` e definir o dono do repositório como `usuario:www-data`.
