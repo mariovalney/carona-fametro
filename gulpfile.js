@@ -60,6 +60,7 @@ gulp.task('styles', gulp.series(less_to_css, css_to_dist));
 
 var js_files = [
     'node_modules/jquery/dist/jquery.js',
+    'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
     theme_source_dir + 'js/vendor/popper.min.js',
     theme_source_dir + 'js/vendor/bootstrap.min.js',
     theme_source_dir + 'js/vendor/*.js',
