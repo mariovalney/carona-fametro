@@ -57,3 +57,6 @@ class Autoloader {
 }
 
 new Autoloader();
+
+// Composer Autoload
+require_once ROOT . 'vendor/autoload.php';

@@ -33,7 +33,8 @@ class Loader
 
         if (isset($params)) {
             foreach ($params as $key => $param) {
-                if (empty($param)) continue;
+                if ( ! isset( $param ) ) continue;
+
                 if ($key == 0) {
                     $GLOBALS['avant']['page'] = $param;
                     continue;

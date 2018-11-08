@@ -179,6 +179,21 @@ function body_class() {
 }
 
 /**
+ * Check is home
+ *
+ * @global array $avant
+ */
+function is_home() {
+    global $avant;
+
+    if ($avant['page'] == 'index') {
+        return true;
+    }
+
+    return false;
+}
+
+/**
  * Create a list of itens using a array.
  *
  * @global array $avant

@@ -16,3 +16,69 @@
         <link rel="stylesheet" type="text/css" href="<?php theme_file_url( 'dist/css/styles' . $css, true, true ); ?>">
     </head>
     <body class="<?php body_class(); ?>" data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+
+        <?php if ( is_home() ) : ?>
+            <nav class="navbar navbar-scrollable navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        <?php _e( 'Carona Fametro', VZR_TEXTDOMAIN ); ?>
+                    </a>
+                    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span><i class="ion-navicon"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="probootstrap-navbar">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#section-home">
+                                    <?php _e( 'Início', VZR_TEXTDOMAIN ); ?>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#section-about">
+                                    <?php _e( 'Como funciona?', VZR_TEXTDOMAIN ); ?>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#section-faq">
+                                    <?php _e( 'FAQ', VZR_TEXTDOMAIN ); ?>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#section-contact">
+                                    <?php _e( 'Contato', VZR_TEXTDOMAIN ); ?>
+                                </a>
+                            </li>
+                            <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
+                                <a class="nav-link" href="/entrar" target="_blank">
+                                    <span class="pb_rounded-4 px-4">
+                                        <?php _e( 'Login', VZR_TEXTDOMAIN ); ?>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- END nav -->
+        <?php else : ?>
+            <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light scrolled awake" id="pb-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        <?php _e( 'Carona Fametro', VZR_TEXTDOMAIN ); ?>
+                    </a>
+                    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span><i class="ion-navicon"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="probootstrap-navbar">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">
+                                    <?php _e( 'Início', VZR_TEXTDOMAIN ); ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- END nav -->
+        <?php endif; ?>

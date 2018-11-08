@@ -1,48 +1,5 @@
 <?php include_header(); ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <?php _e( 'Carona Fametro', VZR_TEXTDOMAIN ); ?>
-        </a>
-        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span><i class="ion-navicon"></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="probootstrap-navbar">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#section-home">
-                        <?php _e( 'Início', VZR_TEXTDOMAIN ); ?>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#section-about">
-                        <?php _e( 'Como funciona?', VZR_TEXTDOMAIN ); ?>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#section-faq">
-                        <?php _e( 'FAQ', VZR_TEXTDOMAIN ); ?>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#section-contact">
-                        <?php _e( 'Contato', VZR_TEXTDOMAIN ); ?>
-                    </a>
-                </li>
-                <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
-                    <a class="nav-link" href="/entrar" target="_blank">
-                        <span class="pb_rounded-4 px-4">
-                            <?php _e( 'Login', VZR_TEXTDOMAIN ); ?>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- END nav -->
-
 <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-center">
@@ -273,33 +230,5 @@
     </div>
 </section>
 <!-- END section -->
-
-<footer class="pb_footer bg-light" role="contentinfo">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col">
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <a href="https://bitbucket.org/valney-team/carona-fametro" class="p-2">
-                            <i class="fa fa-github"></i><br>
-                            <span class="pb_font-14">
-                                <?php _e( 'Contribua!', VZR_TEXTDOMAIN ); ?>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <p class="pb_font-14"><?php echo date( 'Y' ) . ' &copy; ' . __( 'Carona Fametro. Todos os direitos reservados', VZR_TEXTDOMAIN ); ?></p>
-                <p class="pb_font-14"><?php printf( __( 'Desenvolvido por %s utilizando %s. Design por %s.', VZR_TEXTDOMAIN ), '<a href="https://mariovalney.com.br">Mário Valney</a>', '<a href="https://projetos.mariovalney.com/avant/">Avant</a>', '<a href="https://uicookies.com/">uicookies.com</a>' ); ?></p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- loader -->
-<div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff"/></svg></div>
 
 <?php include_footer();

@@ -11,10 +11,6 @@ namespace Avant\Modules;
 use \PHPMailer\PHPMailer\PHPMailer;
 use \PHPMailer\PHPMailer\Exception;
 
-require ROOT . 'vendor/PHPMailer/src/Exception.php';
-require ROOT . 'vendor/PHPMailer/src/PHPMailer.php';
-require ROOT . 'vendor/PHPMailer/src/SMTP.php';
-
 class Sender {
 
     const DEFAULT_TO = 'mario.andrades@aluno.fametro.com.br';
