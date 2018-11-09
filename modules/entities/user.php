@@ -28,6 +28,10 @@ class User {
 
     public $avatar = '';
 
+    public $bio = '';
+
+    public $phone = '';
+
     /**
      * Retrieve instance.
      *
@@ -66,6 +70,8 @@ class User {
             'lastName',
             'displayName',
             'avatar',
+            'bio',
+            'phone',
         );
 
         $values = array(
@@ -75,6 +81,8 @@ class User {
             $this->lastName,
             $this->displayName,
             $this->avatar,
+            $this->bio,
+            $this->phone,
         );
 
         if ( empty( $this->createdAt ) ) {

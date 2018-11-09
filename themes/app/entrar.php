@@ -70,6 +70,12 @@ if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token'
     $token_info = $google->verifyIdToken();
     $email = $token_info['email'] ?? '';
 
+    if ( ! empty( $email ) {
+        unset( $_SESSION['id_token_token'] );
+        header( 'Location: ' . BASE_URL . 'entrar' );
+        exit;
+    }
+
     if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
         unset( $_SESSION['id_token_token'] );
 

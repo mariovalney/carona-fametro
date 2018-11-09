@@ -27,6 +27,7 @@ function get_user_by( $field, $value ) {
 function create_user( $googleId, $data = [] ) {
     $data = (object) array(
         'googleId'      => $googleId,
+        'bio'           => $data['bio'] ?? '',
         'email'         => $data['email'] ?? '',
         'firstName'     => $data['firstName'] ?? '',
         'lastName'      => $data['lastName'] ?? '',

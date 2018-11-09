@@ -211,7 +211,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-5">
-                 <form action="/ajax/contato" method="POST" class="ajax-form bg-white rounded pb_form_v1">
+                <form action="/ajax/contato" method="POST" class="ajax-form bg-white rounded pb_form_v1">
                     <div class="form-group">
                         <input name="contact-name" type="text" class="form-control py-3 reverse" placeholder="<?php _e( 'Seu nome', VZR_TEXTDOMAIN ); ?>" required>
                     </div>

@@ -14,6 +14,8 @@
 
         <?php $css = ( defined( 'DEBUG' ) && DEBUG ) ? '.css' : '.min.css'; ?>
         <link rel="stylesheet" type="text/css" href="<?php theme_file_url( 'dist/css/styles' . $css, true, true ); ?>">
+
+        <script type="text/javascript">var CF = { swal: [] };</script>
     </head>
     <body class="<?php body_class(); ?>" data-spy="scroll" data-target="#pb-navbar" data-offset="200">
 
@@ -51,7 +53,7 @@
                             <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
                                 <a class="nav-link" href="/entrar">
                                     <span class="pb_rounded-4 px-4">
-                                        <?php _e( 'Login', VZR_TEXTDOMAIN ); ?>
+                                        <?php _e( 'Entrar', VZR_TEXTDOMAIN ); ?>
                                     </span>
                                 </a>
                             </li>
@@ -71,16 +73,16 @@
                     </button>
                     <div class="collapse navbar-collapse" id="probootstrap-navbar">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">
-                                    <?php _e( 'Início', VZR_TEXTDOMAIN ); ?>
-                                </a>
-                            </li>
                             <?php
                                 $user = get_logged_user();
 
                                 if ( ! empty( $user ) ) :
                             ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/perfil">
+                                        <?php _e( 'Perfil', VZR_TEXTDOMAIN ); ?>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/sair">
                                         <?php _e( 'Sair', VZR_TEXTDOMAIN ); ?>

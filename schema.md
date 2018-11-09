@@ -9,6 +9,8 @@ CREATE TABLE users (
     lastName varchar(100) NOT NULL,
     displayName varchar(100) NOT NULL,
     avatar varchar(100) NOT NULL,
+    bio LONGTEXT NOT NULL,
+    phone varchar(20) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT users_PK PRIMARY KEY (ID)
 )
