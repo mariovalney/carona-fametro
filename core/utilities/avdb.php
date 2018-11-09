@@ -22,6 +22,7 @@ class avdb {
 
             try {
                 $this->conn = new PDO($this->dns, $this->user, $this->pass);
+                $this->conn->exec( 'SET CHARACTER SET utf8' );
             } catch (PDOException $ex) {
                 if (DEBUG) {
                     print_r($ex);

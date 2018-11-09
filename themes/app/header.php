@@ -49,7 +49,7 @@
                                 </a>
                             </li>
                             <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
-                                <a class="nav-link" href="/entrar" target="_blank">
+                                <a class="nav-link" href="/entrar">
                                     <span class="pb_rounded-4 px-4">
                                         <?php _e( 'Login', VZR_TEXTDOMAIN ); ?>
                                     </span>
