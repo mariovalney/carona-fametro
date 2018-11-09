@@ -10,14 +10,19 @@ namespace Avant\Modules;
 
 class Google {
 
-    private function getGoogleClient() {
-        $client = new \Google_Client();
-        $client->setAuthConfig( $this->getClientCredentials() );
+    private static $client;
 
-        return $client;
+    public static function getGoogleClient() {
+        if ( empty( self::$client ) ) {
+            $client = new \Google_Client();
+            $client->setAuthConfig( self::getClientCredentials() );
+            self::$client = $client;
+        }
+
+        return self::$client;
     }
 
-    private function getClientCredentials() {
+    private static function getClientCredentials() {
         // Up 2 levels to avoid public access
         $oauth_credentials = dirname( dirname( ROOT ) ) . '/caronafametro_client_credentials.json';
 
@@ -30,13 +35,16 @@ class Google {
     }
 
     public function login( $token = false ) {
-        $client = $this->getGoogleClient();
+        $client = self::getGoogleClient();
 
         // Scope
         $client->setScopes( 'email' );
+        $client->addScope( \Google_Service_Oauth2::PLUS_ME );
+        $client->addScope( \Google_Service_Oauth2::USERINFO_PROFILE );
 
         // Redirect URL
         $client->setRedirectUri( BASE_URL . 'entrar' );
+        // $client->setRedirectUri( 'http://localhost:8080/entrar' ); // For debug
 
         // Set Access Token if provided
         if ( $token ) {
@@ -44,6 +52,32 @@ class Google {
         }
 
         return $client;
+    }
+
+    public static function create_section() {
+        session_start();
+
+        $client = self::getGoogleClient();
+
+        if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token']['id_token'] ) ) {
+            // Check user can login
+            $client->setAccessToken( $_SESSION['id_token_token'] );
+
+            $token_info = $client->verifyIdToken();
+            $email = $token_info['email'] ?? '';
+
+            if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
+                unset( $_SESSION['id_token_token'] );
+
+                header( 'Location: ' . BASE_URL . 'entrar/0' );
+                exit;
+            }
+
+            return true;
+        }
+
+        header( 'Location: ' . BASE_URL . 'entrar' );
+        exit;
     }
 
 }

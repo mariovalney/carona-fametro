@@ -99,6 +99,7 @@ function to_404() {
  */
 function av_redirect( $url = '' ) {
     header("Location:" . BASE_URL . $url);
+    exit;
 }
 
 /**

@@ -76,6 +76,17 @@
                                     <?php _e( 'Início', VZR_TEXTDOMAIN ); ?>
                                 </a>
                             </li>
+                            <?php
+                                $user = get_logged_user();
+
+                                if ( ! empty( $user ) ) :
+                            ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/sair">
+                                        <?php _e( 'Sair', VZR_TEXTDOMAIN ); ?>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>

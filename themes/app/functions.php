@@ -8,6 +8,15 @@ function get_theme_image( $file, $echo = true, $add_version = false ) {
     theme_file_url( 'dist/images/' . $file, $echo, $add_version );
 }
 
+function create_google_section() {
+    Avant\Modules\Google::create_section();
+}
+
+function get_logged_user() {
+    $user = Avant\Modules\User::getInstance();
+    return $user->getUserData();
+}
+
 function sanitize_text_field( $string ) {
     $string = sanitize_textarea_field( $string );
     $string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
