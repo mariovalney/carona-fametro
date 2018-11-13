@@ -16,7 +16,7 @@
         $user->phone = sanitize_textarea_field( $_POST['phone'] ?? '' );
 
         $result = $user->save();
-        var_dump($result);
+
         if ( $result ) {
             echo '<script type="text/javascript">window.CF.swal.push(["Perfil salvo", "", "success"]);</script>';
         } else {
