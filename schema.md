@@ -19,3 +19,28 @@ DEFAULT CHARSET=utf8
 COLLATE=utf8_general_ci
 COMMENT='List of users';
 ```
+
+## Creating table routes
+
+```
+CREATE TABLE routes (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    startLat varchar(20) NOT NULL,
+    startLng varchar(20) NOT NULL,
+    endLat varchar(20) NOT NULL,
+    endLng varchar(20) NOT NULL,
+    startTime varchar(10) NOT NULL,
+    returnTime varchar(10) NOT NULL,
+    campusName varchar(100) NOT NULL,
+    isDriver integer(1) NOT NULL,
+    dow integer(1) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT routes_PK PRIMARY KEY (ID),
+    CONSTRAINT routes_users_FK FOREIGN KEY (userId) REFERENCES users(ID)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci
+COMMENT='List of routes';
+```
