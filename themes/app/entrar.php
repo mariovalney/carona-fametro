@@ -79,6 +79,9 @@ if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token'
     if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
         unset( $_SESSION['id_token_token'] );
 
+        error_log( 'Invalid Login: ' . $email );
+        error_log( print_r( $token_info, true ) );
+
         header( 'Location: ' . BASE_URL . 'entrar/0' );
         return;
     }
