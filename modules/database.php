@@ -10,7 +10,8 @@ namespace Avant\Modules;
 
 class Database {
     const ENTITIES = [
-        'user' => 'Avant\Modules\Entities\User',
+        'user'  => 'Avant\Modules\Entities\User',
+        'route' => 'Avant\Modules\Entities\Route',
     ];
 
     /**

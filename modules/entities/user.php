@@ -9,11 +9,7 @@
 namespace Avant\Modules\Entities;
 
 class User {
-    /**
-     * ID
-     *
-     * @var int
-     */
+
     public $ID;
 
     public $googleId = '';
