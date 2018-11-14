@@ -232,30 +232,7 @@ function validateForms() {
     $('.validate-form').each(function(index, el) {
         var form = $(el);
 
-        form.validate({
-            invalidHandler: function(event, validator) {
-                var requiredCheckbox = [];
-
-                // First of all stop elementor
-                form.addClass('elementor-form-waiting');
-                event.preventDefault();
-
-                // Let's continue
-                $('[data-required-checkbox-group-error]').hide();
-
-                for (var i = 0; i < validator.errorList.length; i++) {
-                    if (validator.errorList[i].method != 'required-checkbox-group') continue;
-
-                    var name = $(validator.errorList[i].element).attr('name');
-                    $('[data-required-checkbox-group-error="' + name + '"').text(validator.errorList[i].message).show();
-                }
-
-                return false;
-            },
-            submitHandler: function(form_element) {
-                form.removeClass('elementor-form-waiting');
-            }
-        });
+        form.validate();
 
         form.find('input.mask-phone').rules('add', { telefone: true });
 

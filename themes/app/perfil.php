@@ -10,14 +10,30 @@
     include_header();
 
     if ( ! empty( $_POST['first-name'] ) ) {
-        $user->firstName = sanitize_text_field( $_POST['first-name'] ?? '' );
-        $user->lastName = sanitize_text_field( $_POST['last-name'] ?? '' );
-        $user->bio = sanitize_textarea_field( $_POST['bio'] ?? '' );
-        $user->phone = sanitize_textarea_field( $_POST['phone'] ?? '' );
+        $firstName = sanitize_text_field( $_POST['first-name'] ?? '' );
+        $lastName = sanitize_text_field( $_POST['last-name'] ?? '' );
+        $bio = sanitize_textarea_field( $_POST['bio'] ?? '' );
+        $phone = sanitize_textarea_field( $_POST['phone'] ?? '' );
 
-        $result = $user->save();
+        $nothing_changed = (
+            ( $user->firstName == $firstName ) &&
+            ( $user->lastName == $lastName ) &&
+            ( $user->bio == $bio ) &&
+            ( $user->phone == $phone )
+        );
 
-        if ( $result ) {
+        if ( $nothing_changed ) {
+            $result = true;
+        } else {
+            $user->firstName = $firstName;
+            $user->lastName = $lastName;
+            $user->bio = $bio;
+            $user->phone = $phone;
+
+            $result = $user->save();
+        }
+
+        if ( ! empty( $result ) ) {
             echo '<script type="text/javascript">window.CF.swal.push(["Perfil salvo", "", "success"]);</script>';
         } else {
             echo '<script type="text/javascript">window.CF.swal.push(["Ops...", "Não conseguimos salvar seu perfil.\nVocê alterou algo?", "error"]);</script>';
