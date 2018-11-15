@@ -8,9 +8,10 @@ body.page-rotas {
 }
 
 .modal-routes {
-    padding: 0;
+    padding: 0!important;
 
     .modal-dialog {
         max-width: 100%;
+        border-radius: 0;
     }
 }

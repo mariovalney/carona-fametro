@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 
 // Plugins
+var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
 var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
@@ -26,7 +27,7 @@ function scss_to_css() {
     return gulp.src(theme_source_dir + 'scss/styles.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(rename('styles.css'))
+    .pipe(rename('scss.css'))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(theme_dist_dir + 'css'))
@@ -41,7 +42,7 @@ function css_to_dist() {
         theme_source_dir + 'css/vendor/helpers.css',
         theme_source_dir + 'css/vendor/style.css',
         theme_source_dir + 'css/vendor/landing-2.css',
-        theme_dist_dir + 'css/styles.css',
+        theme_dist_dir + 'css/scss.css',
     ])
     .pipe(concat('styles.css'))
     .pipe(gulp.dest(theme_dist_dir + 'css'))
