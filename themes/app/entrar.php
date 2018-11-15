@@ -49,6 +49,7 @@ if ( $subpage === '0' ) {
     <?php include_footer();
     exit;
 }
+
 // Process Code
 if ( isset( $_GET['code'] ) ) {
     $token = $google->fetchAccessTokenWithAuthCode( $_GET['code'] );

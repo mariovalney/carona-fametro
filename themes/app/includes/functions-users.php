@@ -8,8 +8,8 @@ function sanitize_user( $data ) {
     return $data;
 }
 
-function create_google_section() {
-    Avant\Modules\Google::create_section();
+function create_google_section( $redirect = true ) {
+    return Avant\Modules\Google::create_section( $redirect );
 }
 
 function get_logged_user() {

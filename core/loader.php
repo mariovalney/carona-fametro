@@ -71,6 +71,7 @@ class Loader
         include ROOT . CORE_DIR . DS . 'functions/misc.php';
         include ROOT . CORE_DIR . DS . 'functions/themes.php';
         include ROOT . CORE_DIR . DS . 'functions/l10n.php';
+        include ROOT . CORE_DIR . DS . 'functions/ajax.php';
     }
 
     private function loadDatabase()

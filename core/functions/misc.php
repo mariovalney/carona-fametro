@@ -26,12 +26,3 @@ function av_parse_args($args = '', $default_args = '') {
     }
     return array();
 }
-
-/**
- * Echo and exit a JSON answer
- * @param array $data Any data
- */
-function av_send_json($data) {
-    echo json_encode($data);
-    exit;
-}

@@ -8,37 +8,6 @@
     }
 
     include_header();
-
-    if ( ! empty( $_POST['first-name'] ) ) {
-        $firstName = sanitize_text_field( $_POST['first-name'] ?? '' );
-        $lastName = sanitize_text_field( $_POST['last-name'] ?? '' );
-        $bio = sanitize_textarea_field( $_POST['bio'] ?? '' );
-        $phone = sanitize_textarea_field( $_POST['phone'] ?? '' );
-
-        $nothing_changed = (
-            ( $user->firstName == $firstName ) &&
-            ( $user->lastName == $lastName ) &&
-            ( $user->bio == $bio ) &&
-            ( $user->phone == $phone )
-        );
-
-        if ( $nothing_changed ) {
-            $result = true;
-        } else {
-            $user->firstName = $firstName;
-            $user->lastName = $lastName;
-            $user->bio = $bio;
-            $user->phone = $phone;
-
-            $result = $user->save();
-        }
-
-        if ( ! empty( $result ) ) {
-            echo '<script type="text/javascript">window.CF.swal.push(["Perfil salvo", "", "success"]);</script>';
-        } else {
-            echo '<script type="text/javascript">window.CF.swal.push(["Ops...", "Não conseguimos salvar seu perfil.\nVocê alterou algo?", "error"]);</script>';
-        }
-    }
 ?>
 
     <section class="pb_section pb_section_with_padding">
@@ -56,7 +25,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <form action="/perfil" method="POST" class="bg-white rounded validate-form">
+                    <form action="/ajax/perfil" method="POST" class="ajax-form bg-white rounded validate-form">
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <div class="form-group">

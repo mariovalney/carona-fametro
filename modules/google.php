@@ -54,10 +54,11 @@ class Google {
         return $client;
     }
 
-    public static function create_section() {
+    public static function create_section( $redirect = true ) {
         session_start();
 
         $client = self::getGoogleClient();
+
 
         if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token']['id_token'] ) ) {
             // Check user can login
@@ -69,12 +70,16 @@ class Google {
             if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
                 unset( $_SESSION['id_token_token'] );
 
+                if ( ! $redirect ) return false;
+
                 header( 'Location: ' . BASE_URL . 'entrar/0' );
                 exit;
             }
 
             return true;
         }
+
+        if ( ! $redirect ) return false;
 
         header( 'Location: ' . BASE_URL . 'entrar' );
         exit;

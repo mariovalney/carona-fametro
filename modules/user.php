@@ -21,7 +21,13 @@ class User {
     }
 
     public function getUserData() {
-        $user_from_google = $this->getDataFromGoogle();
+        $user_from_google = [];
+
+        try {
+            $user_from_google = $this->getDataFromGoogle();
+        } catch (Exception $e) {
+            error_log( $e->getMessage() );
+        }
 
         if ( empty( $user_from_google['id'] ) ) {
             return [];
