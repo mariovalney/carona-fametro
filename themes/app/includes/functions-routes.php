@@ -14,3 +14,8 @@ function get_route_by( $field, $value ) {
 
     return $result[0] ?? false;
 }
+
+function get_default_campus() {
+    $default_campus = \Avant\Modules\Entities\Route::valid_campi();
+    return $default_campus[0]['name'] ?? '';
+}

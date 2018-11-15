@@ -9,4 +9,5 @@ function get_theme_image( $file, $echo = true, $add_version = false ) {
 }
 
 include ROOT . THEMES_DIR . '/app/includes/functions-users.php';
+include ROOT . THEMES_DIR . '/app/includes/functions-routes.php';
 include ROOT . THEMES_DIR . '/app/includes/functions-sanitization.php';
