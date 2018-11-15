@@ -46,7 +46,6 @@ class Google {
 
         // Redirect URL
         $client->setRedirectUri( BASE_URL . 'entrar' );
-        // $client->setRedirectUri( 'http://localhost:8080/entrar' ); // For debug
 
         // Set Access Token if provided
         if ( $token ) {

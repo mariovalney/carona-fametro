@@ -18,9 +18,13 @@ class Route {
 
     public $startLng = '';
 
-    public $endLat = '';
+    public $returnLat = '';
 
-    public $endLng = '';
+    public $returnLng = '';
+
+    public $startPlace = '';
+
+    public $returnPlace = '';
 
     public $startTime = '';
 
@@ -69,10 +73,12 @@ class Route {
             'userId',
             'startLat',
             'startLng',
-            'endLat',
-            'endLng',
+            'returnLat',
+            'returnLng',
             'startTime',
             'returnTime',
+            'startPlace',
+            'returnPlace',
             'campusName',
             'isDriver',
             'dow',
@@ -82,10 +88,12 @@ class Route {
             $this->userId,
             $this->startLat,
             $this->startLng,
-            $this->endLat,
-            $this->endLng,
+            $this->returnLat,
+            $this->returnLng,
             $this->startTime,
             $this->returnTime,
+            $this->startPlace,
+            $this->returnPlace,
             $this->campusName,
             $this->isDriver,
             $this->dow,

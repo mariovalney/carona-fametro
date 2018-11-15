@@ -16,10 +16,12 @@ $id = sanitize_text_field( $_POST['id'] );
 $userId = sanitize_text_field( $_POST['user-id'] );
 $startLat = sanitize_text_field( $_POST['start-lat'] );
 $startLng = sanitize_text_field( $_POST['start-lng'] );
-$endLat = sanitize_text_field( $_POST['end-lat'] );
-$endLng = sanitize_text_field( $_POST['end-lng'] );
+$returnLat = sanitize_text_field( $_POST['return-lat'] );
+$returnLng = sanitize_text_field( $_POST['return-lng'] );
 $startTime = sanitize_text_field( $_POST['start-time'] );
 $returnTime = sanitize_text_field( $_POST['return-time'] );
+$startPlace = sanitize_text_field( $_POST['start-place'] );
+$returnPlace = sanitize_text_field( $_POST['return-place'] );
 $campusName = sanitize_text_field( $_POST['campus-name'] );
 $isDriver = sanitize_text_field( $_POST['is-driver'] );
 $dow = sanitize_text_field( $_POST['dow'] );
@@ -31,7 +33,7 @@ if ( $userId != $user->ID ) {
     av_send_ops_json( __( 'Usuário inválido. Faça login e tente novamente' ) );
 }
 
-if ( empty( $startLat ) || empty( $startLng ) || empty( $endLat ) || empty( $endLng ) ) {
+if ( empty( $startLat ) || empty( $startLng ) || empty( $returnLat ) || empty( $returnLng ) ) {
     av_send_ops_json( __( 'Pontos de saída e entrega inválidos. Tente novamente.' ) );
 }
 
@@ -57,14 +59,15 @@ if ( empty( $route ) ) {
 $route->userId = $userId;
 $route->startLat = $startLat;
 $route->startLng = $startLng;
-$route->endLat = $endLat;
-$route->endLng = $endLng;
+$route->returnLat = $returnLat;
+$route->returnLng = $returnLng;
 $route->startTime = $startTime;
 $route->returnTime = $returnTime;
+$route->startPlace = $startPlace;
+$route->returnPlace = $returnPlace;
 $route->campusName = $campusName;
 $route->isDriver = $isDriver;
 $route->dow = $dow;
-
 
 // Save
 $route = new \Avant\Modules\Entities\Route( $route );

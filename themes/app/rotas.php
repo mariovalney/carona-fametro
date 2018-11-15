@@ -25,6 +25,17 @@
      */
     $current_dow = date( 'w' );
     $week = array_slice( $week, $current_dow, ( 7 - $current_dow ), true ) + array_slice( $week, 0, $current_dow, true );
+
+    // Retrieving and ordering Routes
+    $routes = get_routes_by( 'userId', $user->ID );
+    if ( ! empty( $routes ) ) {
+        $routes_from_database = $routes;
+        $routes = [];
+
+        foreach ( $routes_from_database as $route ) {
+            $routes[ $route->dow ] = $route;
+        }
+    }
 ?>
 
     <section class="pb_section pb_section_with_padding">
@@ -45,8 +56,23 @@
                                 </a>
                                 <div id="routes<?php echo $dow; ?>" class="<?php echo ( $dow == $current_dow ) ? 'collapse show' : 'collapse'; ?>" role="tabpanel">
                                     <div class="py-3">
-                                        <?php _e( 'Nenhuma rota cadastrada para esse dia.', VZR_TEXTDOMAIN ); ?>
-                                        <a href="#" data-toggle="modal" data-target="#modal-route-<?php echo $dow; ?>"><?php _e( 'Adicionar ?', VZR_TEXTDOMAIN ); ?></a>
+                                        <?php if ( ! empty( $routes[ $dow ] ) ) : $route = $routes[ $dow ]; ?>
+                                            <p>
+                                                <?php
+                                                    printf(
+                                                        _e( 'Saindo às %s de %s e retornando às %s do campus %s para %s.', VZR_TEXTDOMAIN ),
+                                                        $route->startTime,
+                                                        $route->startPlace,
+                                                        $route->returnTime,
+                                                        $route->campusName,
+                                                        $route->returnPlace
+                                                    );
+                                                ?>
+                                            </p>
+                                        <?php else : ?>
+                                            <?php _e( 'Nenhuma rota cadastrada para esse dia.', VZR_TEXTDOMAIN ); ?>
+                                            <a href="#" data-toggle="modal" data-target="#modal-route-<?php echo $dow; ?>"><?php _e( 'Adicionar ?', VZR_TEXTDOMAIN ); ?></a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -58,16 +84,6 @@
     </section>
 
 <?php
-    $routes = get_routes_by( 'userId', $user->ID );
-    if ( ! empty( $routes ) ) {
-        $routes_from_database = $routes;
-        $routes = [];
-
-        foreach ( $routes_from_database as $route ) {
-            $routes[ $route->dow ] = $route;
-        }
-    }
-
     for ( $i = 0; $i < 7; $i++ ) :
         $modalId = 'modal-route-' . $i;
         $route = $routes[ $i ] ?? [];
@@ -78,8 +94,10 @@
                 'userId'        => $user->ID,
                 'startLat'      => '',
                 'startLng'      => '',
-                'endLat'        => '',
-                'endLng'        => '',
+                'returnLat'     => '',
+                'returnLng'     => '',
+                'startPlace'    => '',
+                'returnPlace'   => '',
                 'startTime'     => '07:00',
                 'returnTime'    => '10:20',
                 'campusName'    => get_default_campus(),
@@ -106,10 +124,12 @@
                         <input name="user-id" type="text" value="<?php echo $route->userId; ?>" required>
                         <input name="start-lat" type="text" value="<?php echo $route->startLat; ?>" required>
                         <input name="start-lng" type="text" value="<?php echo $route->startLng; ?>" required>
-                        <input name="end-lat" type="text" value="<?php echo $route->endLat; ?>" required>
-                        <input name="end-lng" type="text" value="<?php echo $route->endLng; ?>" required>
+                        <input name="return-lat" type="text" value="<?php echo $route->returnLat; ?>" required>
+                        <input name="return-lng" type="text" value="<?php echo $route->returnLng; ?>" required>
                         <input name="start-time" type="text" value="<?php echo $route->startTime; ?>" required>
                         <input name="return-time" type="text" value="<?php echo $route->returnTime; ?>" required>
+                        <input name="start-place" type="text" value="<?php echo $route->startPlace; ?>" required>
+                        <input name="return-place" type="text" value="<?php echo $route->returnPlace; ?>" required>
                         <input name="campus-name" type="text" value="<?php echo $route->campusName; ?>" required>
                         <input name="is-driver" type="text" value="<?php echo $route->isDriver; ?>" required>
                         <input name="dow" type="text" value="<?php echo $route->dow; ?>" required>
