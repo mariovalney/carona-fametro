@@ -3,9 +3,10 @@ var gulp = require('gulp');
 // Plugins
 var browserSync = require('browser-sync').create();
 var concat = require('gulp-concat');
-var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 var uglifyEs = require('gulp-uglify-es').default;
 var watch = require('gulp-watch');
 
@@ -21,15 +22,13 @@ var theme_dir = 'themes/app',
  * Prepare for DIST all CSS needed
  */
 
-function less_to_css() {
-    return gulp.src([
-        theme_source_dir + 'less/theme.less',
-        theme_source_dir + 'less/general.less',
-        theme_source_dir + 'less/**/*.less',
-    ])
-    .pipe(concat('less.less'))
-    .pipe(less())
-    .pipe(rename('less.css'))
+function scss_to_css() {
+    return gulp.src(theme_source_dir + 'scss/styles.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(rename('styles.css'))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(theme_dist_dir + 'css'))
     .pipe(browserSync.stream({stream: true}));
 }
@@ -42,14 +41,14 @@ function css_to_dist() {
         theme_source_dir + 'css/vendor/helpers.css',
         theme_source_dir + 'css/vendor/style.css',
         theme_source_dir + 'css/vendor/landing-2.css',
-        theme_dist_dir + 'css/less.css',
+        theme_dist_dir + 'css/styles.css',
     ])
     .pipe(concat('styles.css'))
     .pipe(gulp.dest(theme_dist_dir + 'css'))
     .pipe(browserSync.stream({stream: true}));
 }
 
-gulp.task('styles', gulp.series(less_to_css, css_to_dist));
+gulp.task('styles', gulp.series(scss_to_css, css_to_dist));
 
 /**
  * TASK: scripts
@@ -98,7 +97,7 @@ function watch_changes() {
     });
 
     gulp.watch(theme_source_dir + 'css/**/*.css', gulp.series('styles'));
-    gulp.watch(theme_source_dir + 'less/**/*.less', gulp.series('styles'));
+    gulp.watch(theme_source_dir + 'scss/**/*.scss', gulp.series('styles'));
     gulp.watch(theme_source_dir + 'js/**/*.js', gulp.series('scripts'));
 }
 

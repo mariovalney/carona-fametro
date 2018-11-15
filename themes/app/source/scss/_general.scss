@@ -13,7 +13,7 @@ body {
 }
 
 .icon-as-logo {
-    color: @white;
+    color: $white;
     font-size: 350px;
     text-align: center;
 }
@@ -34,6 +34,6 @@ body {
 
 form {
     .error {
-        color: @red;
+        color: $red;
     }
 }
