@@ -42,6 +42,8 @@ class Google {
         $client->addScope( \Google_Service_Oauth2::PLUS_ME );
         $client->addScope( \Google_Service_Oauth2::USERINFO_PROFILE );
 
+        $client->setAccessType( 'offline' );
+
         // Redirect URL
         $client->setRedirectUri( BASE_URL . 'entrar' );
         // $client->setRedirectUri( 'http://localhost:8080/entrar' ); // For debug
@@ -55,10 +57,9 @@ class Google {
     }
 
     public static function create_section( $redirect = true ) {
-        session_start();
+        if ( ! session_id() ) session_start();
 
         $client = self::getGoogleClient();
-
 
         if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token']['id_token'] ) ) {
             // Check user can login

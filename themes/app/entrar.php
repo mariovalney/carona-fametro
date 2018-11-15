@@ -2,7 +2,7 @@
 
 global $avant;
 
-session_start();
+if ( ! session_id() ) session_start();
 
 $google = new \Avant\Modules\Google();
 $google = $google->login();
@@ -14,10 +14,54 @@ $subpage = ( $avant['query_params'][0] ) ?? '';
 if ( $subpage === 'logout' ) {
     unset( $_SESSION['id_token_token'] );
 
+    $google->revokeToken();
+    session_destroy();
+
     header( 'Location: ' . BASE_URL );
     return;
 }
 
+// Process Code
+if ( isset( $_GET['code'] ) ) {
+    $token = $google->fetchAccessTokenWithAuthCode( $_GET['code'] );
+
+    // Store in the session also
+    $_SESSION['id_token_token'] = $token;
+
+    header( 'Location: ' . BASE_URL . 'entrar' );
+    return;
+}
+
+// If we have token, go to profile
+if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token']['id_token'] ) ) {
+
+    // Check user can login
+    $google->setAccessToken( $_SESSION['id_token_token'] );
+
+    $token_info = $google->verifyIdToken();
+    $email = $token_info['email'] ?? '';
+
+    if ( empty( $email ) ) {
+        unset( $_SESSION['id_token_token'] );
+        header( 'Location: ' . BASE_URL . 'entrar' );
+        exit;
+    }
+
+    if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
+        unset( $_SESSION['id_token_token'] );
+
+        error_log( 'Invalid Login: ' . $email );
+        error_log( print_r( $token_info, true ) );
+
+        header( 'Location: ' . BASE_URL . 'entrar/0' );
+        return;
+    }
+
+    header( 'Location: ' . BASE_URL . 'perfil' );
+    return;
+}
+
+// If is page/0
 if ( $subpage === '0' ) {
     include_header(); ?>
 
@@ -48,47 +92,6 @@ if ( $subpage === '0' ) {
 
     <?php include_footer();
     exit;
-}
-
-// Process Code
-if ( isset( $_GET['code'] ) ) {
-    $token = $google->fetchAccessTokenWithAuthCode( $_GET['code'] );
-
-    // Store in the session also
-    $_SESSION['id_token_token'] = $token;
-
-    header( 'Location: ' . BASE_URL . 'entrar' );
-    return;
-}
-
-// If we have token, go to profile
-if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token']['id_token'] ) ) {
-
-    // Check user can login
-    $google->setAccessToken( $_SESSION['id_token_token'] );
-
-    $token_info = $google->verifyIdToken();
-    $email = $token_info['email'] ?? '';
-
-
-    if ( empty( $email ) ) {
-        unset( $_SESSION['id_token_token'] );
-        header( 'Location: ' . BASE_URL . 'entrar' );
-        exit;
-    }
-
-    if ( empty( $token_info['email_verified'] ) || ! preg_match( '/^.*@(?:[a-z]*\.)*fametro.com.br$/', $email ) ) {
-        unset( $_SESSION['id_token_token'] );
-
-        error_log( 'Invalid Login: ' . $email );
-        error_log( print_r( $token_info, true ) );
-
-        header( 'Location: ' . BASE_URL . 'entrar/0' );
-        return;
-    }
-
-    header( 'Location: ' . BASE_URL . 'perfil' );
-    return;
 }
 
 /**
