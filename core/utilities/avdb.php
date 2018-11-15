@@ -21,7 +21,7 @@ class avdb {
             $this->dns = $this->db_type . ":host=" . $this->host . ";dbname=" . $this->db;
 
             try {
-                $this->conn = new PDO($this->dns, $this->user, $this->pass);
+                $this->conn = new PDO($this->dns, $this->user, $this->pass, [ PDO::MYSQL_ATTR_FOUND_ROWS => true ]);
                 $this->conn->exec( 'SET CHARACTER SET utf8' );
             } catch (PDOException $ex) {
                 if (DEBUG) {
@@ -260,7 +260,15 @@ class avdb {
 
     private function executeAndReturn($pdo, $method)
     {
-        if (!$pdo->execute()) return [];
+        $result = false;
+
+        try {
+            $result = $pdo->execute();
+        } catch (Exception $e) {
+            error_log( $e->getMessage() );
+        }
+
+        if ( ! $result ) return false;
 
         if ($pdo->rowCount() == 0) return [];
 

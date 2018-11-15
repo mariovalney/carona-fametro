@@ -58,27 +58,72 @@
     </section>
 
 <?php
+    $routes = get_routes_by( 'userId', $user->ID );
+    if ( ! empty( $routes ) ) {
+        $routes_from_database = $routes;
+        $routes = [];
+
+        foreach ( $routes_from_database as $route ) {
+            $routes[ $route->dow ] = $route;
+        }
+    }
+
     for ( $i = 0; $i < 7; $i++ ) :
         $modalId = 'modal-route-' . $i;
+        $route = $routes[ $i ] ?? [];
+
+        if ( empty( $route ) ) {
+            $route = (object) array(
+                'ID'            => 0,
+                'userId'        => $user->ID,
+                'startLat'      => '',
+                'startLng'      => '',
+                'endLat'        => '',
+                'endLng'        => '',
+                'startTime'     => '07:00',
+                'returnTime'    => '10:20',
+                'campusName'    => get_default_campus(),
+                'isDriver'      => 0,
+                'dow'           => $i,
+            );
+        }
 ?>
 
     <div class="modal fade modal-routes" id="<?php echo $modalId; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <?php echo $week[ $i ]; ?>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">...</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
-                        <?php _e( 'Salvar', VZR_TEXTDOMAIN ); ?>
-                    </button>
-                </div>
+                <form action="/ajax/rotas" method="POST" class="ajax-form validate-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <?php echo $week[ $i ]; ?>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="<?php _e( 'Fechar', VZR_TEXTDOMAIN ); ?>">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="id" type="text" value="<?php echo $route->ID; ?>" required>
+                        <input name="user-id" type="text" value="<?php echo $route->userId; ?>" required>
+                        <input name="start-lat" type="text" value="<?php echo $route->startLat; ?>" required>
+                        <input name="start-lng" type="text" value="<?php echo $route->startLng; ?>" required>
+                        <input name="end-lat" type="text" value="<?php echo $route->endLat; ?>" required>
+                        <input name="end-lng" type="text" value="<?php echo $route->endLng; ?>" required>
+                        <input name="start-time" type="text" value="<?php echo $route->startTime; ?>" required>
+                        <input name="return-time" type="text" value="<?php echo $route->returnTime; ?>" required>
+                        <input name="campus-name" type="text" value="<?php echo $route->campusName; ?>" required>
+                        <input name="is-driver" type="text" value="<?php echo $route->isDriver; ?>" required>
+                        <input name="dow" type="text" value="<?php echo $route->dow; ?>" required>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-blue" value="<?php _e( 'Atualizar', VZR_TEXTDOMAIN ); ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <?php _e( 'Salvar', VZR_TEXTDOMAIN ); ?>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

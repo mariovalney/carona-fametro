@@ -38,17 +38,17 @@ class Route {
      * Retrieve instance.
      *
      */
-    public static function get_instance( $poll = false ) {
+    public static function get_instance( $route = false ) {
         global $avdb;
 
-        if ( is_object( $poll ) ) {
-            $poll = \sanitize_route( $poll );
-            return new Route( $poll );
+        if ( is_object( $route ) ) {
+            $route = \sanitize_route( $route );
+            return new Route( $route );
         }
 
-        if ( ! $poll ) return false;
+        if ( ! $route ) return false;
 
-        $data = $avdb->select( self::table(), null, [ 'ID' => $poll ] );
+        $data = $avdb->select( self::table(), null, [ 'ID' => $route ] );
         if ( empty( $data ) || empty( $data[0] ) ) return false;
 
         $data = \sanitize_route( $data[0] );
@@ -99,7 +99,12 @@ class Route {
             return $avdb->update( self::table(), $fields, $values, 'ID', $this->ID );
         }
 
-        return $avdb->insert( self::table(), $fields, $values );
+        $result = $avdb->insert( self::table(), $fields, $values );
+        if ( ! empty( $result ) ) {
+            $this->ID = $result;
+        }
+
+        return $this->ID;
     }
 
     public function delete() {
@@ -157,5 +162,17 @@ class Route {
                 'lng'   => '-38.625519',
             ),
         );
+    }
+
+    public static function is_valid_campus( $campus_name ) {
+        $campi = self::valid_campi();
+
+        foreach ( $campi as $campus ) {
+            if ( $campus['name'] == $campus_name ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
