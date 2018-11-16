@@ -12,6 +12,11 @@ if ( empty( $user ) ) {
     av_send_ops_json( __( 'Usuário inválido. Faça login e tente novamente' ) );
 }
 
+// All Routes?
+$allRoutes = $_POST['all-routes'] ?? '';
+$allRoutes = ( empty( $allRoutes ) ) ? false : true;
+
+// Data
 $id = sanitize_text_field( $_POST['id'] );
 $userId = sanitize_text_field( $_POST['user-id'] );
 $startLat = sanitize_text_field( $_POST['start-lat'] );
@@ -70,17 +75,53 @@ $route->isDriver = $isDriver;
 $route->dow = $dow;
 
 // Save
-$route = new \Avant\Modules\Entities\Route( $route );
-$result = $route->save();
+if ( ! $allRoutes ) {
+    $route = new \Avant\Modules\Entities\Route( $route );
+    $result = $route->save();
 
-if ( ! empty( $route->ID ) ) {
-    $route->ID = $result;
+    if ( ! empty( $route->ID ) ) {
+        $route->ID = $result;
 
-    av_send_json( array(
-        'title'     => __( 'Rota salva!' ),
-        'message'   => '',
-        'route'     => $route,
-    ), 'success' );
+        av_send_json( array(
+            'title'     => __( 'Rota salva!' ),
+            'message'   => '',
+            'route'     => $route,
+        ), 'success' );
+    }
+
+    av_send_ops_json( __( 'Não conseguimos salvar sua rota. Tente novamente.' ) );
 }
 
-av_send_ops_json( __( 'Não conseguimos salvar sua rota. Tente novamente.' ) );
+// All Routes
+delete_routes_by( 'userId', $user->ID );
+
+$success = 0;
+for ($i = 0; $i < 7; $i++) {
+    unset( $route->ID );
+
+    $route = new \Avant\Modules\Entities\Route( $route );
+    $route->dow = $i;
+
+    if ( $route->save() ) {
+        $success++;
+    }
+}
+
+if ( empty( $success ) ) {
+    av_send_ops_json( __( 'Não conseguimos salvar suas rotas. Tente novamente.' ) );
+}
+
+if ( $success < 7 ) {
+    av_send_json( array(
+        'title'     => __( 'Rota salva!' ),
+        'message'   => __( 'Salvamos sua rota, mas houveram alguns erros. Por favor, verifique se todas as rotas foram atualizadas.' ),
+        'route'     => 'all',
+        'status'    => 'warning'
+    ) );
+}
+
+av_send_json( array(
+    'title'     => __( 'Rotas atualizadas!' ),
+    'message'   => '',
+    'route'     => 'all',
+), 'success' );

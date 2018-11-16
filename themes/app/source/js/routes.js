@@ -12,6 +12,38 @@ function routesEvents() {
 
         $('.modal-routes').modal('hide');
 
+        if ( route == 'all' ) {
+            setTimeout(function() {
+                window.location.reload()
+            }, 2000);
+
+            return;
+        }
+
         if ( typeof route.ID === 'undefined' ) return;
+
+        // TODO: Update data without refresh
+        setTimeout(function() {
+            window.location.reload()
+        }, 2000);
+    });
+
+    $('input[name="all-routes"]').on('change', function(event) {
+        var input = $(this);
+
+        if (!input.is(':checked')) return;
+
+        swal({
+            title: 'Você tem certeza?',
+            text: 'Ao salvar essa rota, todas as outras serão alteradas. Isso não pode ser desfeito.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((overwrite) => {
+            if (!overwrite) {
+                input.prop('checked', false);
+            }
+        });
     });
 }

@@ -67,6 +67,51 @@
             box-shadow: 0 0 1px $blue;
         }
     }
+
+    &.small {
+        min-width: 51px;
+        height: 30px;
+        padding-left: 51px;
+
+        .slider {
+            width: 51px;
+
+            &:before {
+                height: 22px;
+                width: 22px;
+                left: 4px;
+                bottom: 4px;
+            }
+
+            &.round {
+                border-radius: 30px;
+            }
+        }
+
+        input {
+            &:checked + .slider {
+                &:before {
+                    -webkit-transform: translateX(22px);
+                    -ms-transform: translateX(22px);
+                    transform: translateX(22px);
+                }
+            }
+        }
+    }
+
+    &.right {
+        padding-left: 0;
+        padding-right: 60px;
+
+        .slider {
+            right: 0;
+            left: auto;
+        }
+
+        &.small {
+            padding-right: 51px;
+        }
+    }
 }
 
 

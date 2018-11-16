@@ -20,6 +20,14 @@ function get_routes_by( $field, $value ) {
     return $result ?? [];
 }
 
+function delete_routes_by( $field, $value ) {
+    $routes = get_routes_by( $field, $value );
+
+    foreach ( $routes as $route ) {
+        $route->delete();
+    }
+}
+
 function get_default_campus() {
     $default_campus = \Avant\Modules\Entities\Route::valid_campi();
     return $default_campus[0]['name'] ?? '';

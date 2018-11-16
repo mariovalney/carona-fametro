@@ -33,6 +33,7 @@ body.page-rotas {
             form {
                 display: flex;
                 flex-direction: column;
+                height: 100%;
 
                 .modal-header {
                     text-align: center;
@@ -46,6 +47,24 @@ body.page-rotas {
                 .modal-body {
                     overflow: auto;
                     height: 100%;
+
+                    padding-bottom: 60px;
+
+                    .all-routes {
+                        position: absolute;
+                        bottom: 15px;
+                        right: 15px;
+                        line-height: 30px;
+                        font-size: 20px;
+                        line-height: 30px;
+                        text-align: right;
+                        width: 100%;
+
+                        .switch {
+                            margin-bottom: 0;
+                            padding-right: 60px;
+                        }
+                    }
                 }
 
                 .modal-footer {

@@ -182,6 +182,16 @@
                                 <input class="form-control mask-time" name="return-time" type="text" value="<?php echo $route->returnTime; ?>" required>
                             </div>
                         </div>
+                        <!-- TODO: Add remove route -->
+                        <div class="all-routes">
+                            <label class="switch small right">
+                                <input name="all-routes" type="checkbox" value="1">
+                                <span class="slider round"></span>
+                                <span class="label">
+                                    <?php _e( 'Todos os dias?', VZR_TEXTDOMAIN ); ?>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-blue">
