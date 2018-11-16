@@ -24,9 +24,22 @@
         </footer>
 
         <!-- loader -->
-        <div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff"/></svg></div>
+        <div id="pb_loader" class="show fullscreen">
+            <svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff"/></svg>
+        </div>
+
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?php echo MAPS_API; ?>" type="text/javascript"></script>
 
         <?php $js = ( defined( 'DEBUG' ) && DEBUG ) ? '.js' : '.min.js'; ?>
         <script type="text/javascript" src="<?php theme_file_url( 'dist/js/scripts' . $js, true, true ) ?>"></script>
+        <script type="text/javascript">
+            var CF = CF || {};
+            CF.campi = JSON.parse('<?php echo json_encode( \Avant\Modules\Entities\Route::valid_campi() ); ?>');
+            CF.markers = {
+                campus: '<?php get_theme_image( 'map-icon-campus.png' ) ?>',
+                start: '<?php get_theme_image( 'map-icon-start.png' ) ?>',
+                return: '<?php get_theme_image( 'map-icon-return.png' ) ?>',
+            };
+        </script>
     </body>
 </html>

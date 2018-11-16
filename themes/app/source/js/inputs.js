@@ -140,6 +140,19 @@
 
         return this.optional(element) || validateCpf(value);
     }, "Informe um CNPJ ou um CPF válido.");
+
+    jQuery.validator.addMethod('time24', function(value, element) {
+        if ( !/^\d{2}:\d{2}$/.test(value) ) {
+            return false;
+        }
+
+        var parts = value.split(':');
+        if ( parts.length < 2 || parts[0] > 23 || parts[1] > 59 ) {
+            return false;
+        }
+
+        return true;
+    }, "Horário inválido.");
 })(jQuery);
 
 jQuery.validator.addMethod('telefone', function(value, element, param) {
@@ -211,7 +224,7 @@ function createMasks() {
 
     // Masks
     $('.mask-date').mask( '00/00/0000' );
-    $('.mask-time').mask( '00:00:00' );
+    $('.mask-time').mask( '00:00' );
     $('.mask-date_time').mask( '00/00/0000 00:00:00' );
     $('.mask-mixed').mask( 'AAA 000-S0S' );
     $('.mask-cep').mask( '00000-000' );
@@ -262,17 +275,11 @@ function validateForms() {
             min: 0
         });
 
-        // If the form has simulation fields
-        form.find('[data-validate-simulation-min]').each(function(index, input) {
-            $(input).rules('add', {
-                moneyMin: parseFloat( $(input).data('validate-simulation-min') ),
-            });
-        });
-
-        form.find('[data-validate-simulation-max]').each(function(index, input) {
-            $(input).rules('add', {
-                moneyMax: parseFloat( $(input).data('validate-simulation-max') ),
-            });
+        form.find('input.mask-time').rules('add', {
+            time24: true,
+            messages: {
+                cpf: 'Horário inválido.'
+            }
         });
     });
 }

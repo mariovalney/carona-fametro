@@ -24,3 +24,10 @@ function get_default_campus() {
     $default_campus = \Avant\Modules\Entities\Route::valid_campi();
     return $default_campus[0]['name'] ?? '';
 }
+
+function get_campus_for_options() {
+    $default_campus = \Avant\Modules\Entities\Route::valid_campi();
+    return array_map( function( $campus ) {
+        return $campus['name'];
+    }, $default_campus );
+}

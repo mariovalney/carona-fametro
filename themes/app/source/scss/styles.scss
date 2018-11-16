@@ -1,5 +1,8 @@
 @import '_theme';
 @import '_general';
+@import '_grid';
+
+@import 'components/switch.scss';
 
 @import 'pages/profile';
 @import 'pages/routes';

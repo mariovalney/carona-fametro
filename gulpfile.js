@@ -1,9 +1,11 @@
 var gulp = require('gulp');
 
 // Plugins
+var addSrc = require('gulp-add-src');
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
 var concat = require('gulp-concat');
+var iife = require('gulp-iife');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
@@ -58,23 +60,35 @@ gulp.task('styles', gulp.series(scss_to_css, css_to_dist));
  * Prepare for DIST all JS needed
  */
 
-var js_files = [
+var js_vendor_files = [
     'node_modules/jquery/dist/jquery.js',
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
     'node_modules/sweetalert/dist/sweetalert.min.js',
     'node_modules/jquery-mask-plugin/dist/jquery.mask.js',
     'node_modules/jquery-validation/dist/jquery.validate.min.js',
+    'node_modules/underscore/underscore.js',
     theme_source_dir + 'js/vendor/popper.min.js',
     theme_source_dir + 'js/vendor/bootstrap.min.js',
     theme_source_dir + 'js/vendor/*.js',
-    theme_source_dir + 'js/**/*.js',
-    '!'+ theme_source_dir + 'js/ready.js',
     theme_source_dir + 'js/landing.js',
+];
+
+var js_files = [
+    theme_source_dir + 'js/**/*.js',
+    '!' + theme_source_dir + 'js/vendor/*.js',
+    '!' + theme_source_dir + 'js/ready.js',
     theme_source_dir + 'js/ready.js',
 ];
 
 function js_to_dist() {
     return gulp.src(js_files)
+        .pipe(concat('scripts.js'))
+        .pipe(iife({
+            prependSemicolon: false,
+            params: ['window', 'document', '$'],
+            args: ['window', 'document', '$']
+        }))
+        .pipe(addSrc.prepend(js_vendor_files))
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest(theme_dist_dir + 'js'))
         .pipe(browserSync.reload({stream: true}));

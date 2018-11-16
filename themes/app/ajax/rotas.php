@@ -23,9 +23,9 @@ $returnTime = sanitize_text_field( $_POST['return-time'] );
 $startPlace = sanitize_text_field( $_POST['start-place'] );
 $returnPlace = sanitize_text_field( $_POST['return-place'] );
 $campusName = sanitize_text_field( $_POST['campus-name'] );
-$isDriver = sanitize_text_field( $_POST['is-driver'] );
 $dow = sanitize_text_field( $_POST['dow'] );
 
+$isDriver = $_POST['is-driver'] ?? '';
 $isDriver = ( empty( $isDriver ) ) ? 0 : 1;
 
 // Validate Data
