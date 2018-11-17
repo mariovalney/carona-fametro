@@ -56,7 +56,8 @@
                                 </a>
                             </li>
                             <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
-                                <a class="nav-link" href="/entrar">
+                                <?php $url = ( empty( $user ) ) ? '/entrar' : '/rotas'; ?>
+                                <a class="nav-link" href="<?php echo $url; ?>">
                                     <span class="pb_rounded-4 px-4">
                                         <?php _e( 'Entrar', VZR_TEXTDOMAIN ); ?>
                                     </span>
