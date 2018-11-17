@@ -157,7 +157,7 @@
                                 <a class="find-marker btn btn-primary" href="#" data-input-type="start"><?php _e( 'Procurar' ); ?></a>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 form-group">
-                                <label><?php _e( 'Ponto de Partida:', VZR_TEXTDOMAIN ); ?></label>
+                                <label><?php _e( 'Ponto de Retorno:', VZR_TEXTDOMAIN ); ?></label>
                                 <input name="return-place" class="form-control" type="text" value="<?php echo $route->returnPlace; ?>" required>
                                 <a class="find-marker btn btn-primary" href="#" data-input-type="return"><?php _e( 'Procurar' ); ?></a>
                             </div>
