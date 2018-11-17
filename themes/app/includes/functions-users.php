@@ -14,7 +14,7 @@ function create_google_section( $redirect = true ) {
 
 function get_logged_user() {
     $user = Avant\Modules\User::getInstance();
-    return $user->getUserData();
+    return $user->getLoggedUser();
 }
 
 function get_user_by( $field, $value ) {

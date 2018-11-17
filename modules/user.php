@@ -20,7 +20,31 @@ class User {
         return self::$instance;
     }
 
-    public function getUserData() {
+    public function getLoggedUser() {
+        if ( ! session_id() ) session_start();
+
+        if ( empty( $_SESSION['id_token_token'] ) || empty( $_SESSION['id_token_token']['id_token'] ) ) {
+            return [];
+        }
+
+        $google = Google::getGoogleClient();
+        $google->setAccessToken( $_SESSION['id_token_token'] );
+        $token_info = $google->verifyIdToken();
+
+        if ( empty( $token_info['sub'] ) ) {
+            return [];
+        }
+
+        $user = get_user_by( 'googleId', $token_info['sub'] );
+
+        if ( ! empty( $user ) ) {
+            return $user;
+        }
+
+        return $this->getUserDataFromGoogle();
+    }
+
+    private function getUserDataFromGoogle() {
         $user_from_google = [];
 
         try {

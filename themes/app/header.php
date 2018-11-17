@@ -1,3 +1,8 @@
+<?php
+    // Get Logged User
+    $user = get_logged_user();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -73,11 +78,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="probootstrap-navbar">
                         <ul class="navbar-nav ml-auto">
-                            <?php
-                                $user = get_logged_user();
-
-                                if ( ! empty( $user ) ) :
-                            ?>
+                            <?php if ( ! empty( $user ) ) : ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/perfil">
                                         <?php _e( 'Perfil', VZR_TEXTDOMAIN ); ?>
