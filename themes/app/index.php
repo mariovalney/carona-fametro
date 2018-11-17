@@ -76,7 +76,7 @@
 <section class="pb_section pb_slant-light">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 mb-5">
+            <div class="col-lg-4 mb-5 text-center">
                 <img src="<?php get_theme_image( 'phone.png' ); ?>" alt="Image placeholder" class="img-fluid">
             </div>
             <div class="col-lg-8 pl-md-5 pl-sm-0">
@@ -87,60 +87,56 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg">
-                        <div class="media pb_feature-v2 text-left mb-1 mt-5" data-match-height="features-box">
-                            <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
-                                <i class="ion-ios-locked-outline pb_icon-gradient"></i>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
-                                    <?php _e( 'Segurança', VZR_TEXTDOMAIN ); ?>
-                                </h3>
-                                <p class="text-sans-serif pb_font-16">
-                                    <?php _e( 'As informações de contato só serão divulgadas quando a carona for aceita. Também é obrigatório ter um e-mail da Faculdade para fazer login.', VZR_TEXTDOMAIN ); ?>
-                                </p>
-                            </div>
+                    <div class="media pb_feature-v2 text-left col-xs-12 col-sm-12 col-md-6" data-match-height="features-box">
+                        <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
+                            <i class="ion-ios-locked-outline pb_icon-gradient"></i>
                         </div>
-                        <div class="media pb_feature-v2 text-left mb-1 mt-5" data-match-height="features-box">
-                            <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
-                                <i class="ion-merge pb_icon-gradient"></i>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
-                                    <?php _e( 'Automatizado', VZR_TEXTDOMAIN ); ?>
-                                </h3>
-                                <p class="text-sans-serif pb_font-16">
-                                    <?php _e( 'Quando um motorista cadastra sua rota, enviamos um alerta para eles avisando que existe uma nova possibilidade de carona.', VZR_TEXTDOMAIN ); ?>
-                                </p>
-                            </div>
+                        <div class="media-body">
+                            <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
+                                <?php _e( 'Segurança', VZR_TEXTDOMAIN ); ?>
+                            </h3>
+                            <p class="text-sans-serif pb_font-16">
+                                <?php _e( 'As informações de contato só serão divulgadas quando a carona for aceita. Também é obrigatório ter um e-mail da Faculdade para fazer login.', VZR_TEXTDOMAIN ); ?>
+                            </p>
                         </div>
                     </div>
-                    <div class="col-lg">
-                        <div class="media pb_feature-v2 text-left mb-1 mt-5" data-match-height="features-box">
-                            <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
-                                <i class="ion-android-bus pb_icon-gradient"></i>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
-                                    <?php _e( 'Economize o busão', VZR_TEXTDOMAIN ); ?>
-                                </h3>
-                                <p class="text-sans-serif pb_font-16">
-                                    <?php _e( 'Pegar uma carona com um colega é muito melhor do que vir apertado no busão. Aproveite e faça amizade com o motorista.', VZR_TEXTDOMAIN ); ?>
-                                </p>
-                            </div>
+                    <div class="media pb_feature-v2 text-left col-xs-12 col-sm-12 col-md-6" data-match-height="features-box">
+                        <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
+                            <i class="ion-merge pb_icon-gradient"></i>
                         </div>
-                        <div class="media pb_feature-v2 text-left mb-1 mt-5" data-match-height="features-box">
-                            <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
-                                <i class="ion-android-car pb_icon-gradient"></i>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
-                                    <?php _e( 'Seja um motorista', VZR_TEXTDOMAIN ); ?>
-                                </h3>
-                                <p class="text-sans-serif pb_font-16">
-                                    <?php _e( 'Além de ter a confiança de transportar um colega, vocês podem rachar a gasolina e diminuir as despesas com o carro. Além de uma boa conversa, é claro!', VZR_TEXTDOMAIN ); ?>
-                                </p>
-                            </div>
+                        <div class="media-body">
+                            <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
+                                <?php _e( 'Automatizado', VZR_TEXTDOMAIN ); ?>
+                            </h3>
+                            <p class="text-sans-serif pb_font-16">
+                                <?php _e( 'Quando um motorista cadastra sua rota, enviamos um alerta para eles avisando que existe uma nova possibilidade de carona.', VZR_TEXTDOMAIN ); ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media pb_feature-v2 text-left col-xs-12 col-sm-12 col-md-6" data-match-height="features-box">
+                        <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
+                            <i class="ion-android-bus pb_icon-gradient"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
+                                <?php _e( 'Economize o busão', VZR_TEXTDOMAIN ); ?>
+                            </h3>
+                            <p class="text-sans-serif pb_font-16">
+                                <?php _e( 'Pegar uma carona com um colega é muito melhor do que vir apertado no busão. Aproveite e faça amizade com o motorista.', VZR_TEXTDOMAIN ); ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media pb_feature-v2 text-left col-xs-12 col-sm-12 col-md-6" data-match-height="features-box">
+                        <div class="pb_icon d-flex mr-3 align-self-start pb_w-15">
+                            <i class="ion-android-car pb_icon-gradient"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="mt-2 mb-2 heading" data-match-height="features-title">
+                                <?php _e( 'Seja um motorista', VZR_TEXTDOMAIN ); ?>
+                            </h3>
+                            <p class="text-sans-serif pb_font-16">
+                                <?php _e( 'Além de ter a confiança de transportar um colega, vocês podem rachar a gasolina e diminuir as despesas com o carro. E uma boa conversa, é claro!', VZR_TEXTDOMAIN ); ?>
+                            </p>
                         </div>
                     </div>
                 </div>
