@@ -57,11 +57,14 @@ if ( ! empty( $_SESSION['id_token_token'] ) && isset( $_SESSION['id_token_token'
         return;
     }
 
-    header( 'Location: ' . BASE_URL . 'perfil' );
+    header( 'Location: ' . BASE_URL . 'rotas' );
     return;
 }
 
-// If is page/0
+/**
+ * If is page/0
+ * Restrict Access info
+ */
 if ( $subpage === '0' ) {
     include_header(); ?>
 
