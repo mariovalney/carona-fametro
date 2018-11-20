@@ -20,6 +20,13 @@ function get_routes_by( $field, $value ) {
     return $result ?? [];
 }
 
+function get_routes() {
+    $db = \Avant\Modules\Database::instance();
+    $result = $db->get( 'route' );
+
+    return $result ?? [];
+}
+
 function delete_routes_by( $field, $value ) {
     $routes = get_routes_by( $field, $value );
 

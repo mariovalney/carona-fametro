@@ -21,7 +21,7 @@ function get_user_by( $field, $value ) {
     $db = \Avant\Modules\Database::instance();
     $result = $db->get( 'user', [ $field => $value ] );
 
-    return $result[0] ?? false;
+    return $result[0] ?? [];
 }
 
 function create_user( $googleId, $data = [] ) {

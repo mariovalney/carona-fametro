@@ -14,5 +14,7 @@ package.json
 composer.json
 gulpfile.js
 
+scripts/*
+
 themes/app/source/*
 themes/app/dist/css/less.css
