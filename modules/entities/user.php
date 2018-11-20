@@ -32,17 +32,17 @@ class User {
      * Retrieve instance.
      *
      */
-    public static function get_instance( $poll = false ) {
+    public static function get_instance( $user = false ) {
         global $avdb;
 
-        if ( is_object( $poll ) ) {
-            $poll = \sanitize_user( $poll );
-            return new User( $poll );
+        if ( is_object( $user ) ) {
+            $user = \sanitize_user( $user );
+            return new User( $user );
         }
 
-        if ( ! $poll ) return false;
+        if ( ! $user ) return false;
 
-        $data = $avdb->select( self::table(), null, [ 'ID' => $poll ] );
+        $data = $avdb->select( self::table(), null, [ 'ID' => $user ] );
         if ( empty( $data ) || empty( $data[0] ) ) return false;
 
         $data = \sanitize_user( $data[0] );
