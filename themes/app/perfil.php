@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-md-6 text-center mb-5">
-                    <img src="<?php echo $user->avatar; ?>" class="avatar">
+                    <img src="<?php echo get_user_avatar( $user->ID ); ?>" class="avatar">
                     <h2><?php printf( __( 'Olá, %s!', VZR_TEXTDOMAIN ), $user->firstName ); ?></h2>
                 </div>
             </div>

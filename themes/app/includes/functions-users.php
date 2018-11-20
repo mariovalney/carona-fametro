@@ -38,3 +38,9 @@ function create_user( $googleId, $data = [] ) {
     $user = Avant\Modules\Entities\User::get_instance( $data );
     return $user->save();
 }
+
+function get_user_avatar( $user ) {
+    $user = Avant\Modules\Entities\User::get_instance( $user );
+
+    return ( ! empty( $user->avatar ) ) ? $user->avatar : get_theme_image( 'user_placeholder.jpg' );
+}
