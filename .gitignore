@@ -5,6 +5,7 @@ composer.lock
 *.log
 config.php
 themes/*/dist/**
-!themes/*/dist/images
+!themes/*/dist/images/
+!themes/*/dist/images/**
 
 .htaccess
