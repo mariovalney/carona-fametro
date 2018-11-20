@@ -1,0 +1,75 @@
+#rides-list {
+
+    .item-title {
+        span {
+            float: right;
+            color: $blue;
+            line-height: 39px;
+            height: 39px;
+            font-size: 15px;
+            vertical-align: middle;
+
+            i {
+                font-size: 30px;
+                line-height: 39px;
+                height: 39px;
+                display: inline-block;
+                vertical-align: middle;
+                float: right;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .route-description {
+        span {
+            font-weight: bold;
+        }
+    }
+
+    .available-rides {
+        display: none;
+        padding: 0 15px;
+        margin: 20px 0 40px;
+
+        &.done {
+            display: block;
+        }
+
+        &.loading {
+            display: block;
+
+            * {
+                display: none;
+            }
+
+            .loading-text {
+                cursor: wait;
+                display: block;
+                font-weight: 400;
+            }
+        }
+
+        & > p {
+            margin: 0;
+        }
+
+        ul {
+            margin: 15px 0 0;
+            padding: 0;
+
+            &:empty {
+                display: none;
+            }
+
+            li {
+                list-style: none;
+                cursor: pointer;
+            }
+        }
+
+        .error {
+            color: $red;
+        }
+    }
+}

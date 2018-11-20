@@ -91,6 +91,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="/caronas">
+                                        <?php _e( 'Caronas', VZR_TEXTDOMAIN ); ?>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="/sair">
                                         <?php _e( 'Sair', VZR_TEXTDOMAIN ); ?>
                                     </a>
