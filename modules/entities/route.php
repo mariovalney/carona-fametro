@@ -145,29 +145,34 @@ class Route {
     public static function valid_campi() {
         return array(
             array(
-                'name'  => 'Conselheiro Estelita',
-                'lat'   => '-3.725420',
-                'lng'   => '-38.539780',
+                'name'      => 'Conselheiro Estelita',
+                'lat'       => '-3.725420',
+                'lng'       => '-38.539780',
+                'cluster'   => '1',
             ),
             array(
-                'name'  => 'Padre Ibiapina',
-                'lat'   => '-3.726195',
-                'lng'   => '-38.540271',
+                'name'      => 'Padre Ibiapina',
+                'lat'       => '-3.726195',
+                'lng'       => '-38.540271',
+                'cluster'   => '1',
             ),
             array(
-                'name'  => 'Guilherme Rocha',
-                'lat'   => '-3.723146',
-                'lng'   => '-38.539291',
+                'name'      => 'Guilherme Rocha',
+                'lat'       => '-3.723146',
+                'lng'       => '-38.539291',
+                'cluster'   => '1',
             ),
             array(
-                'name'  => 'Carneiro da Cunha',
-                'lat'   => '-3.724029',
-                'lng'   => '-38.543084',
+                'name'      => 'Carneiro da Cunha',
+                'lat'       => '-3.724029',
+                'lng'       => '-38.543084',
+                'cluster'   => '1',
             ),
             array(
-                'name'  => 'Maracanaú',
-                'lat'   => '-3.829430',
-                'lng'   => '-38.625519',
+                'name'      => 'Maracanaú',
+                'lat'       => '-3.829430',
+                'lng'       => '-38.625519',
+                'cluster'   => '2',
             ),
         );
     }
@@ -182,5 +187,28 @@ class Route {
         }
 
         return false;
+    }
+
+    public static function campi_clusters( $campus_name = '' ) {
+        $cluster = [];
+        $the_cluster = 0;
+
+        foreach ( self::valid_campi() as $campus ) {
+            if ( empty( $cluster[ $campus['cluster'] ] ) ) {
+                $cluster[ $campus['cluster'] ] = [];
+            }
+
+            $cluster[ $campus['cluster'] ][] = $campus;
+
+            if ( $campus_name === $campus['name'] ) {
+                $the_cluster = $campus['cluster'];
+            }
+        }
+
+        if ( $campus_name ) {
+            return $cluster[ $the_cluster ] ?? [];
+        }
+
+        return $cluster;
     }
 }

@@ -84,6 +84,10 @@ class Database {
         return $object->delete();
     }
 
+    public function query( $query, $values = [] ) {
+        return $this->db->query( $query, $values );
+    }
+
     private function get_table( $entity ) {
         return call_user_func( self::ENTITIES[ $entity ] . '::table' );
     }

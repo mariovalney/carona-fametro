@@ -114,6 +114,8 @@ function watch_changes() {
     gulp.watch(theme_source_dir + 'css/**/*.css', gulp.series('styles'));
     gulp.watch(theme_source_dir + 'scss/**/*.scss', gulp.series('styles'));
     gulp.watch(theme_source_dir + 'js/**/*.js', gulp.series('scripts'));
+
+    gulp.watch('**/*.php').on('change', browserSync.reload);
 }
 
 gulp.task('watch', watch_changes);

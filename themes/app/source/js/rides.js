@@ -34,12 +34,12 @@ function searchRides() {
                 goingWrapper = $(el).find('.route-going').find('.available-rides'),
                 goingItems = '';
 
+            _.each(goingRides, function(element, index, list) {
+                goingItems += createRideItem( element, 'return' );
+            });
+
             goingWrapper.removeClass('loading').addClass('done');
             goingWrapper.empty().append(goingItems);
-
-            _.each(goingRides, function(element, index, list) {
-                goingItems += createRideItem( element );
-            });
 
             // Returning
             var returningRides = response.returning || [],
@@ -47,7 +47,7 @@ function searchRides() {
                 returningItems = '';
 
             _.each(returningRides, function(element, index, list) {
-                returningItems += createRideItem( element );
+                returningItems += createRideItem( element, 'start' );
             });
 
             returningWrapper.removeClass('loading').addClass('done');
@@ -65,6 +65,27 @@ function searchRides() {
     });
 }
 
-function createRideItem( content ) {
-    return '<li class="list-group-item list-group-item-action">' + content + '</li>';
+function createRideItem( content, type ) {
+    var name = content.firstName,
+        place = ( type == 'return' ) ? content.returnPlace : content.startPlace,
+        time = ( type == 'return' ) ? content.returnTime : content.startTime,
+        campus = content.campusName,
+        message = '';
+
+    if ( type == 'return' ) {
+        if ( content.isDriver ) {
+            message = 'Pegar [name] no campus [campus] às [time] em direção a [place]';
+        } else {
+            message = '[name] vai sair do campus [campus] às [time] em direção a [place]';
+        }
+    } else {
+        if ( content.isDriver ) {
+            message = 'Pegar [name] em [place] às [time] em direção ao campus [campus]';
+        } else {
+            message = '[name] vai sair de [place] às [time] em direção ao campus [campus]';
+        }
+    }
+
+    message = message.replace( '[name]', name ).replace( '[place]', place ).replace( '[time]', time ).replace( '[campus]', campus );
+    return '<li class="list-group-item list-group-item-action">' + message + ' <a href="#">Ver no mapa</a></li>';
 }

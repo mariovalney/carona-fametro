@@ -307,4 +307,26 @@ class avdb {
     {
         return $this->__delete($table, $where, $logical);
     }
+
+    public function query($query, $values = []) {
+        $method = '';
+
+        if ( preg_match( '/^\s*(insert|delete|update|replace)\s/i', $query ) ) {
+            $method = 'insert';
+        } elseif ( preg_match( '/^\s*(select)\s/i', $query ) ) {
+            $method = 'select';
+        }
+
+        $query = $this->conn->prepare( $query );
+
+        // BindValues
+        $values = (array) $values;
+        $values = array_values( $values );
+
+        foreach ($values as $key => $value) {
+            $query->bindValue( $key + 1, $value );
+        }
+
+        return $this->executeAndReturn($query, $method);
+    }
 }
