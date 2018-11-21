@@ -1,6 +1,26 @@
 'use strict';
 
 (function(jQuery) {
+    $.extend(jQuery.validator.messages, {
+        required: 'Este campo deve ser preenchido.',
+        remote: 'Por favor, corrija este campo.',
+        email: 'Preencha com um e-mail válido.',
+        url: 'Preencha com uma URL válida.',
+        date: 'Preencha com uma data válida.',
+        dateISO: 'Preencha com uma data válida (padrão ISO).',
+        number: 'Preencha com um número válido.',
+        digits: 'Preencha apenas com dígitos.',
+        creditcard: 'Preencha com um cartão de crédito válido.',
+        equalTo: 'Repita o valor corretamente.',
+        accept: 'Por favor, forneça um valor com uma extens&atilde;o válida.',
+        maxlength: jQuery.validator.format('Preencha no máximo {0} caracteres.'),
+        minlength: jQuery.validator.format('Preencha no mínimo {0} caracteres.'),
+        rangelength: jQuery.validator.format('Preencha entre {0} e {1} caracteres.'),
+        range: jQuery.validator.format('Preencha um valor entre {0} e {1}.'),
+        max: jQuery.validator.format('Preencha um valor menor ou igual a {0}.'),
+        min: jQuery.validator.format('Preencha um valor menor ou igual a {0}.')
+    });
+
     function validateCnpj(cnpj) {
         cnpj = cnpj.toString().replace(/[^0-9]/g, '');
 
