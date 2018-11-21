@@ -9,10 +9,13 @@
 namespace Avant\Modules;
 
 use \Location\Coordinate;
+use \Location\Polygon;
 use \Location\Polyline;
 use \Location\Distance\Vincenty;
 
 class Phpgeo {
+    const KM_IN_COORD_DISTANCE = 0.00901;
+
     public static function calculateDistance( $coord1, $coord2 ) {
         $coord1 = self::createCoordinate( $coord1 );
         $coord2 = self::createCoordinate( $coord2 );
@@ -48,20 +51,51 @@ class Phpgeo {
         return $centroid;
     }
 
-    public static function calculatePolygonVerticesFromLine( $coords ) {
-        $width = 10;
+    /**
+     * Valid Directions:
+     *
+     * 0 - none
+     * 1 - north
+     * 2 - northwest
+     * 3 - northeast
+     * 4 - south
+     * 5 - southeast
+     * 6 - southwest
+     * 7 - west
+     * 8 - east
+     */
+    public static function calculatePolygonVerticesFromRoute( $maneuvers ) {
+        $polygon = new Polygon();
+        $inverseCoordinates = [];
 
-        // Only the first line:
+        $maneuvers = array_values( $maneuvers );
 
-        // A Point
-        $a = $coords[0];
-        $ax = $a[0];
-        $ay = $a[1];
+        $perpendiculars = [];
+        foreach ( $maneuvers as $key => $maneuver ) {
+            if ( $key == 0 ) continue;
 
-        // B Point
-        $b = $coords[1];
-        $bx = $b[0];
-        $by = $b[1];
+            $last_maneuver = $maneuvers[ $key - 1 ];
+
+            $pointA = [ $last_maneuver->startPoint->lat, $last_maneuver->startPoint->lng ];
+            $pointB = [ $maneuver->startPoint->lat, $maneuver->startPoint->lng ];
+
+            $perpendicular = self::getPerpendicularPoints( $pointA, $pointB );
+            $perpendiculars[] = [ $maneuver->direction, $perpendicular];
+
+            $direction = ( $last_maneuver->direction >= $maneuver->direction ) ? 0 : 1;
+            $inverse = ( $direction ) ? 0 : 1;
+
+            $polygon->addPoint( self::createCoordinate( $perpendicular[ $direction ] ) );
+            $inverseCoordinates[] = self::createCoordinate( $perpendicular[ $inverse ] );
+        }
+
+        $inverseCoordinates = array_reverse( $inverseCoordinates );
+
+        foreach ( $inverseCoordinates as $coordinate ) {
+            $polygon->addPoint( $coordinate );
+        }
+
+        exit;
     }
 
     public static function createCoordinate( $value ) {
@@ -82,5 +116,40 @@ class Phpgeo {
         }
 
         return false;
+    }
+
+    /**
+     * Get the third coordinate of a triangle (positive and negative axis),
+     * if we know the points A and B and we C is perpendicular to B.
+     *
+     * @link https://math.stackexchange.com/questions/3007159/third-cordinate-of-a-triangle-when-we-know-two-sides-and-two-other-points/3007187#3007187
+     */
+    private static function getPerpendicularPoints( $pointA, $pointB ) {
+        $width = self::KM_IN_COORD_DISTANCE * 0.05;
+
+        // A Point
+        $ax = $pointA[0];
+        $ay = $pointA[1];
+
+        // B Point
+        $bx = $pointB[0];
+        $by = $pointB[1];
+
+        // Slope of AB and BC
+        $mab = ( $by - $ay ) / ( $bx - $ax );
+        $mbc = -1 * ( 1 / $mab );
+
+        // Angle from BC to horizontal axis
+        $angle = atan( $mbc );
+
+        // Moving from B in positive X
+        $cx = $bx + $width * cos( $angle );
+        $cy = $by + $width * sin( $angle );
+
+        // Moving from B in negative X
+        $cx2 = $bx - $width * cos( $angle );
+        $cy2 = $by - $width * sin( $angle );
+
+        return [ [ $cx, $cy ], [ $cx2, $cy2 ] ];
     }
 }

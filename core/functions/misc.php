@@ -24,5 +24,14 @@ function av_parse_args($args = '', $default_args = '') {
     } else if(is_array($default_args)) {
         return $default_args;
     }
+
     return array();
+}
+
+function print_lat( $array ) {
+    if ( ! is_array( $array ) ) {
+        print_r( $array  . "\n" );
+    }
+
+    print_r( implode( ',', $array ) . "\n");
 }

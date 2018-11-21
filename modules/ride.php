@@ -77,6 +77,8 @@ class Ride {
 
         $polygon = $this->createPolygonFromMapquestRoute( $direction );
 
+        exit;
+
         // Get from Database
         $query .= ' LIMIT 5';
         $rides = Database::instance()->query( $query, $values );
@@ -126,13 +128,7 @@ class Ride {
             $maneuvers = array_merge( $maneuvers, $leg->maneuvers );
         }
 
-        $line = [];
-        foreach ( $maneuvers as $maneuver ) {
-            $line[] = [ $maneuver->startPoint->lat, $maneuver->startPoint->lng ];
-            // $line[] = Phpgeo::createCoordinate( $maneuver->startPoint );
-        }
-
-        $polygon = Phpgeo::calculatePolygonVerticesFromLine( $line );
+        $polygon = Phpgeo::calculatePolygonVerticesFromRoute( $maneuvers );
         print_r( $polygon );
 
         exit;

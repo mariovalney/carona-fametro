@@ -36,25 +36,12 @@ $response = array(
     'returning' => [ __( 'Nenhuma carona disponível.', VZR_TEXTDOMAIN ) ],
 );
 
-/*
 ?>
     <script id="__bs_script__">//<![CDATA[
         document.write("<script async src='/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
     //]]></script>
     <pre>
 <?php
-*/
-
-// print_r( $route );
-
-$cluster_polygon = [];
-
-$cluster = \Avant\Modules\Entities\Route::campi_clusters( $route->campusName );
-foreach ( $cluster as $campus ) {
-    $cluster_polygon[] = [ $campus['lat'], $campus['lng'] ];
-}
-
-$clusterCenter = \Avant\Modules\Phpgeo::calculateClusterCentroid( $cluster_polygon );
 
 // Get Rides
 $rides = new Ride( $route );
