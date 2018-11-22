@@ -7,5 +7,7 @@ config.php
 themes/*/dist/**
 !themes/*/dist/images/
 !themes/*/dist/images/**
+!themes/*/dist/fonts/
+!themes/*/dist/fonts/**
 
 .htaccess
