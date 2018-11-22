@@ -35,7 +35,7 @@ function searchRides() {
                 goingItems = '';
 
             _.each(goingRides, function(element, index, list) {
-                goingItems += createRideItem( element, 'return' );
+                goingItems += createRideItem( element, 'start' );
             });
 
             if ( _.isEmpty( goingItems ) ) {
@@ -51,7 +51,7 @@ function searchRides() {
                 returningItems = '';
 
             _.each(returningRides, function(element, index, list) {
-                returningItems += createRideItem( element, 'start' );
+                returningItems += createRideItem( element, 'return' );
             });
 
             if ( _.isEmpty( returningItems ) ) {
