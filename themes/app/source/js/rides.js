@@ -43,7 +43,7 @@ function searchRides() {
             }
 
             goingWrapper.removeClass('loading').addClass('done');
-            goingWrapper.empty().append(goingItems);
+            goingWrapper.find('ul').empty().append(goingItems);
 
             // Returning
             var returningRides = response.returning || [],
@@ -59,7 +59,7 @@ function searchRides() {
             }
 
             returningWrapper.removeClass('loading').addClass('done');
-            returningWrapper.empty().append(returningItems);
+            returningWrapper.find('ul').empty().append(returningItems);
 
             // Remove Loading
             clearInterval( loadingIntervarl );
