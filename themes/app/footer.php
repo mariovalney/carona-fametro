@@ -39,6 +39,8 @@
                 campus: '<?php get_theme_image( 'map-icon-campus.png' ) ?>',
                 start: '<?php get_theme_image( 'map-icon-start.png' ) ?>',
                 return: '<?php get_theme_image( 'map-icon-return.png' ) ?>',
+                one: '<?php get_theme_image( 'map-icon-one.png' ) ?>',
+                two: '<?php get_theme_image( 'map-icon-two.png' ) ?>',
             };
         </script>
     </body>

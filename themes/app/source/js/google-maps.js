@@ -7,7 +7,7 @@ function mapsRoutes() {
         $('#modal-route-' + i).on('shown.bs.modal', function(event) {
             var modal = $(this),
                 dow = modal.data('dow'),
-                map = createMap(dow),
+                map = createRouteMap(dow),
                 startMarker = false,
                 returnMarker = false;
 
@@ -132,7 +132,7 @@ function mapsRoutes() {
     }
 }
 
-function createMap(dow) {
+function createRouteMap(dow) {
     var mapElement = document.getElementById( 'map-routes-' + dow );
 
     if ( ! mapElement ) {
@@ -150,19 +150,41 @@ function createMap(dow) {
     return map;
 }
 
-function addCampiMarkers(map) {
+function createRideMap() {
+    var mapElement = document.getElementById( 'map-rides' );
+
+    return new google.maps.Map(mapElement, {
+        center: default_pos,
+        placeInput: false,
+        zoom: 13
+    });
+}
+
+function addNumeredMarker( num, lat, lng, map ) {
+    return new google.maps.Marker({
+        position: { lat: parseFloat( lat ), lng: parseFloat( lng ) },
+        title: num.toString(),
+        icon: ( num == 1 ) ? CF.markers.one : CF.markers.two,
+        map: map
+    });
+}
+
+function addCampusMarker( lat, lng, name, map ) {
+    return new google.maps.Marker({
+        position: { lat: parseFloat( lat ), lng: parseFloat( lng ) },
+        title: name,
+        icon: CF.markers.campus,
+        map: map
+    });
+}
+
+function addCampiMarkers( map ) {
     var markers = [];
 
     _.each(CF.campi, function(element, index, list) {
         markers.push({
             name: element.name,
-            marker: new google.maps.Marker({
-                position: { lat: parseFloat( element.lat ), lng: parseFloat( element.lng ) },
-                title: element.name,
-                icon: CF.markers.campus,
-                visible: false,
-                map: map
-            })
+            marker: addCampusMarker( element.lat, element.lng, element.name, map )
         });
     });
 
@@ -239,6 +261,37 @@ function startOrReturnMarkerMoved(type, event, modal) {
 
         placeInput.val(address);
     });
+}
+
+function createDirection( points, map, callback ) {
+    var waypoints = [],
+        directionsService = new google.maps.DirectionsService,
+        directionsDisplay = new google.maps.DirectionsRenderer( {
+            suppressMarkers: true,
+            map: map
+        } );
+
+    _.each(points, function(element, index, list) {
+        waypoints.push( {
+            location: element[0] + ',' + element[1],
+            stopover: true
+        } );
+    });
+
+    directionsService.route( {
+        origin: waypoints.shift().location,
+        destination: waypoints.pop().location,
+        waypoints: waypoints,
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING'
+    }, function(response, status) {
+        if ( status === 'OK' ) {
+            directionsDisplay.setDirections( response );
+        }
+
+        if ( typeof callback !== 'function' ) return;
+        callback.call( this, response, status, directionsDisplay );
+    } );
 }
 
 function getUserLocation(callback, callbackError) {

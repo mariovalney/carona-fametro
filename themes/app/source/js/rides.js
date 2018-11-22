@@ -1,3 +1,33 @@
+function rideOnMap( parentSelector ) {
+    var route_id = $(this).parents( parentSelector ).data('route-id'),
+        route_description = $(this).parents( parentSelector ).find('.route-description').html(),
+        route_point = $(this).parents( parentSelector ).data('route-point'),
+        route_campus = $(this).parents( parentSelector ).data('route-campus'),
+        route_is_driver = $(this).parents( parentSelector ).data('route-is-driver'),
+        ride_user = $(this).data('ride-user'),
+        ride_point = $(this).data('ride-point'),
+        ride_campus = $(this).data('ride-campus');
+
+    if ( ! route_id, ! route_description || ! route_point || ! route_campus || ! ride_user || ! ride_point || ! ride_campus ) {
+        swal( 'Ops...', 'Não foi possível exibir a rota.', 'error' );
+        return;
+    }
+
+    openRideModal( route_id, route_description, route_point, route_campus, route_is_driver, ride_user, ride_point, ride_campus );
+}
+
+function ridesEvents() {
+    $('body').on('click', '.route-going li', function( event ) {
+        event.preventDefault();
+        rideOnMap.call(this, '.route-going');
+    });
+
+    $('body').on('click', '.route-returning li', function( event ) {
+        event.preventDefault();
+        rideOnMap.call(this, '.route-returning');
+    });
+}
+
 function searchRides() {
     var ridesList = $('#rides-list');
     if ( ! ridesList.length ) return;
@@ -78,15 +108,22 @@ function createRideItem( content, type ) {
         place = ( type == 'return' ) ? content.returnPlace : content.startPlace,
         time = ( type == 'return' ) ? content.returnTime : content.startTime,
         campus = content.campusName,
-        message = '';
+        ride_user = content.userId,
+        message = '',
+        ride_point = '',
+        attrs = 'data-ride-user="[ride_user]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
 
     if ( type == 'return' ) {
+        ride_point = content.returnLat + ',' + content.returnLng;
+
         if ( content.isDriver ) {
             message = 'Pegar [name] no campus [campus] às [time] em direção a [place]';
         } else {
             message = '[name] vai sair do campus [campus] às [time] em direção a [place]';
         }
     } else {
+        ride_point = content.startLat + ',' + content.startLng;
+
         if ( content.isDriver ) {
             message = 'Pegar [name] em [place] às [time] em direção ao campus [campus]';
         } else {
@@ -94,8 +131,11 @@ function createRideItem( content, type ) {
         }
     }
 
+
     message = message.replace( '[name]', name ).replace( '[place]', place ).replace( '[time]', time ).replace( '[campus]', campus );
-    return '<li class="list-group-item list-group-item-action">' + message + ' <a href="#">Ver no mapa</a></li>';
+    attrs = attrs.replace( '[ride_user]', ride_user ).replace( '[ride_point]', ride_point ).replace( '[campus]', campus );
+
+    return '<li class="list-group-item list-group-item-action" ' + attrs + ' title="Ver no mapa">' + message + '</li>';
 }
 
 function createEmptyRideItem() {

@@ -67,7 +67,12 @@
                                 <div class="collapse show" role="tabpanel">
                                     <div class="py-3">
                                         <?php if ( ! empty( $route ) ) : ?>
-                                            <div class="route-going">
+                                            <div class="route-going"
+                                                data-route-id="<?php echo $route->ID; ?>"
+                                                data-route-is-driver="<?php echo $route->isDriver ? '1' : '0'; ?>"
+                                                data-route-point="<?php echo $route->startLat . ',' . $route->startLng; ?>"
+                                                data-route-campus="<?php echo $route->campusName;?>"
+                                            >
                                                 <p class="route-description">
                                                     <?php
                                                         printf(
@@ -92,7 +97,12 @@
                                                     <ul class="list-group"></ul>
                                                 </div>
                                             </div>
-                                            <div class="route-returning">
+                                            <div class="route-returning"
+                                                data-route-id="<?php echo $route->ID; ?>"
+                                                data-route-is-driver="<?php echo $route->isDriver ? '1' : '0'; ?>"
+                                                data-route-point="<?php echo $route->returnLat . ',' . $route->returnLng; ?>"
+                                                data-route-campus="<?php echo $route->campusName;?>"
+                                            >
                                                 <p class="route-description">
                                                     <?php
                                                         printf(
@@ -132,5 +142,42 @@
         </div>
     </section>
 
+    <div class="modal fade modal-routes" id="modal-rides" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/ajax/convite" method="POST" class="ajax-form validate-form">
+                    <input name="user-id" type="hidden" value="<?php echo $user->ID; ?>" required>
+                    <input name="invited-user-id" type="hidden" value="" required>
+                    <input name="route-id" type="hidden" value="" required>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <?php _e( 'Carona', VZR_TEXTDOMAIN ); ?>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="<?php _e( 'Fechar', VZR_TEXTDOMAIN ); ?>">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12">
+                                <div id="map-rides" class="map-rides"></div>
+                                <p class="route-description"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <p><?php _e( 'Confira seu desvio:', VZR_TEXTDOMAIN ); ?></p>
+                                <div id="modal-rides-panel"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-submit-invite pb_btn-pill btn-shadow-blue"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <?php
     include_footer();

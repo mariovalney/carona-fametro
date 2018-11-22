@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
 
     modalEvents();
     routesEvents();
+    ridesEvents();
 
     mapsRoutes();
 
