@@ -65,7 +65,8 @@ class Ride {
          */
         $values[] = ( $this->route->isDriver ) ? '0' : '1';
 
-        $query .= ' LIMIT 5';
+        // Just for now...
+        $query .= ' ORDER BY RAND() LIMIT 5';
         return Database::instance()->query( $query, $values );
 
         /**

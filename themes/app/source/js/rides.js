@@ -38,6 +38,10 @@ function searchRides() {
                 goingItems += createRideItem( element, 'return' );
             });
 
+            if ( _.isEmpty( goingItems ) ) {
+                goingItems += createEmptyRideItem();
+            }
+
             goingWrapper.removeClass('loading').addClass('done');
             goingWrapper.empty().append(goingItems);
 
@@ -49,6 +53,10 @@ function searchRides() {
             _.each(returningRides, function(element, index, list) {
                 returningItems += createRideItem( element, 'start' );
             });
+
+            if ( _.isEmpty( returningItems ) ) {
+                returningItems += createEmptyRideItem();
+            }
 
             returningWrapper.removeClass('loading').addClass('done');
             returningWrapper.empty().append(returningItems);
@@ -88,4 +96,8 @@ function createRideItem( content, type ) {
 
     message = message.replace( '[name]', name ).replace( '[place]', place ).replace( '[time]', time ).replace( '[campus]', campus );
     return '<li class="list-group-item list-group-item-action">' + message + ' <a href="#">Ver no mapa</a></li>';
+}
+
+function createEmptyRideItem() {
+    return '<li class="list-group-item list-group-item-action">Nenhuma carona encontrada para essa rota</li>';
 }
