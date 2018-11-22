@@ -8,8 +8,10 @@ body {
     }
 }
 
-.btn {
+.btn,
+button {
     cursor: pointer;
+    outline: none!important;
 }
 
 .icon-as-logo {
