@@ -5,12 +5,20 @@ function rideOnMap( parentSelector ) {
         route_campus = $(this).parents( parentSelector ).data('route-campus'),
         route_is_driver = $(this).parents( parentSelector ).data('route-is-driver'),
         ride_user = $(this).data('ride-user'),
+        ride_user_name = $(this).data('ride-user-name'),
+        ride_user_avatar = $(this).data('ride-user-avatar'),
         ride_point = $(this).data('ride-point'),
         ride_campus = $(this).data('ride-campus');
 
     if ( ! route_id, ! route_description || ! route_point || ! route_campus || ! ride_user || ! ride_point || ! ride_campus ) {
         swal( 'Ops...', 'Não foi possível exibir a rota.', 'error' );
         return;
+    }
+
+    ride_user = {
+        ID: ride_user,
+        name: ride_user_name,
+        avatar: ride_user_avatar,
     }
 
     openRideModal( route_id, route_description, route_point, route_campus, route_is_driver, ride_user, ride_point, ride_campus );
@@ -109,9 +117,11 @@ function createRideItem( content, type ) {
         time = ( type == 'return' ) ? content.returnTime : content.startTime,
         campus = content.campusName,
         ride_user = content.userId,
+        ride_user_name = content.displayName,
+        ride_user_avatar = content.avatar,
         message = '',
         ride_point = '',
-        attrs = 'data-ride-user="[ride_user]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
+        attrs = 'data-ride-user="[ride_user]" data-ride-user-name="[ride_user_name]" data-ride-user-avatar="[ride_user_avatar]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
 
     if ( type == 'return' ) {
         ride_point = content.returnLat + ',' + content.returnLng;
@@ -133,7 +143,7 @@ function createRideItem( content, type ) {
 
 
     message = message.replace( '[name]', name ).replace( '[place]', place ).replace( '[time]', time ).replace( '[campus]', campus );
-    attrs = attrs.replace( '[ride_user]', ride_user ).replace( '[ride_point]', ride_point ).replace( '[campus]', campus );
+    attrs = attrs.replace( '[ride_user]', ride_user ).replace( '[ride_user_name]', ride_user_name ).replace( '[ride_user_avatar]', ride_user_avatar ).replace( '[ride_point]', ride_point ).replace( '[campus]', campus );
 
     return '<li class="list-group-item list-group-item-action" ' + attrs + ' title="Ver no mapa">' + message + '</li>';
 }

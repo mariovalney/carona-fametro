@@ -167,6 +167,15 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
+                                <p><?php _e( 'Dados do colega:', VZR_TEXTDOMAIN ); ?></p>
+                                <div class="avatar-wrapper">
+                                    <div class="avatar"></div>
+                                    <div class="invited-user-name"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
                                 <p><?php _e( 'Confira seu desvio:', VZR_TEXTDOMAIN ); ?></p>
                                 <div id="modal-rides-panel"></div>
                             </div>

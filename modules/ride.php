@@ -32,7 +32,7 @@ class Ride {
     }
 
     private function getRides( $type ) {
-        $query = 'SELECT routes.*, users.firstName FROM routes LEFT JOIN users ON routes.userId = users.ID';
+        $query = 'SELECT routes.*, users.displayName, users.avatar FROM routes LEFT JOIN users ON routes.userId = users.ID';
         $query .= ' WHERE (routes.' . $type . 'Time >= ? AND routes.' . $type . 'Time <= ?) AND routes.campusName IN ( %campusName% )';
         $query .= ' AND routes.dow = ? AND routes.isDriver = ?';
 

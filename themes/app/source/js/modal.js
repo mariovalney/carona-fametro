@@ -18,11 +18,12 @@ var rideModal = {
     route: false
 };
 
+// TODO: Refactory to accept a object with data
 function openRideModal( route_id, route_description, route_point, route_campus, route_is_driver, ride_user, ride_point, ride_campus ) {
     var modal = $('#modal-rides'),
         direction = [];
 
-    if ( ! modal.length || ! route_id || ! ride_user ) {
+    if ( ! modal.length || ! route_id || _.isEmpty( ride_user ) ) {
         swal( 'Ops...', 'Não foi possível exibir a rota.', 'error' );
         return;
     }
@@ -45,9 +46,15 @@ function openRideModal( route_id, route_description, route_point, route_campus, 
 
     // Texts and Data
     modal.find('input[name="route-id"]').val( route_id );
-    modal.find('input[name="invited-user-id"]').val( ride_user );
+    modal.find('input[name="invited-user-id"]').val( ride_user.ID );
+    modal.find('.invited-user-name').html( ride_user.name );
     modal.find('.route-description').html( route_description );
     modal.find('.btn-submit-invite').text( ( route_is_driver ) ? 'Enviar convite' : 'Solicitar carona' );
+
+    modal.find('.avatar').empty();
+    if ( ! _.isEmpty( ride_user.avatar ) ) {
+        modal.find('.avatar').append( '<img src="' + ride_user.avatar + '">' );
+    }
 
     // Open Modal
     modal.modal('show');
