@@ -89,7 +89,12 @@ class User {
             return $avdb->update( self::table(), $fields, $values, 'ID', $this->ID );
         }
 
-        return $avdb->insert( self::table(), $fields, $values );
+        $result = $avdb->insert( self::table(), $fields, $values );
+        if ( ! empty( $result ) ) {
+            $this->ID = $result;
+        }
+
+        return $this->ID;
     }
 
     public function delete() {

@@ -12,4 +12,5 @@ include ROOT . THEMES_DIR . '/app/includes/functions-misc.php';
 include ROOT . THEMES_DIR . '/app/includes/functions-datetime.php';
 include ROOT . THEMES_DIR . '/app/includes/functions-users.php';
 include ROOT . THEMES_DIR . '/app/includes/functions-routes.php';
+include ROOT . THEMES_DIR . '/app/includes/functions-invites.php';
 include ROOT . THEMES_DIR . '/app/includes/functions-sanitization.php';

@@ -12,6 +12,7 @@ class Database {
     const ENTITIES = [
         'user'  => 'Avant\Modules\Entities\User',
         'route' => 'Avant\Modules\Entities\Route',
+        'invite' => 'Avant\Modules\Entities\Invite',
     ];
 
     /**

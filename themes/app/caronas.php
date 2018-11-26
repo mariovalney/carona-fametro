@@ -146,8 +146,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="/ajax/convite" method="POST" class="ajax-form validate-form">
-                    <input name="user-id" type="hidden" value="<?php echo $user->ID; ?>" required>
-                    <input name="invited-user-id" type="hidden" value="" required>
+                    <input name="type" type="hidden" value="" required>
+                    <input name="ride-id" type="hidden" value="" required>
                     <input name="route-id" type="hidden" value="" required>
 
                     <div class="modal-header">

@@ -46,3 +46,26 @@ DEFAULT CHARSET=utf8
 COLLATE=utf8_general_ci
 COMMENT='List of routes';
 ```
+
+## Creating table invites
+
+```
+CREATE TABLE invites (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    routeId BIGINT NOT NULL,
+    rideId BIGINT NOT NULL,
+    route LONGTEXT NOT NULL,
+    ride LONGTEXT NOT NULL,
+    type varchar(10) NOT NULL,
+    sendedMails integer(5) NOT NULL,
+    isAccepted integer(1) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT invites_PK PRIMARY KEY (ID),
+    CONSTRAINT invites_routes_FK FOREIGN KEY (routeId) REFERENCES routes(ID),
+    CONSTRAINT invites_rides_FK FOREIGN KEY (rideId) REFERENCES routes(ID)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci
+COMMENT='Invites';
+```

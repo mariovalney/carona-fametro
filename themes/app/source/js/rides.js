@@ -4,9 +4,12 @@ function rideOnMap( parentSelector ) {
         route_point = $(this).parents( parentSelector ).data('route-point'),
         route_campus = $(this).parents( parentSelector ).data('route-campus'),
         route_is_driver = $(this).parents( parentSelector ).data('route-is-driver'),
-        ride_user = $(this).data('ride-user'),
-        ride_user_name = $(this).data('ride-user-name'),
-        ride_user_avatar = $(this).data('ride-user-avatar'),
+        type = $(this).data('type'),
+        ride_id = $(this).data('ride-id'),
+        ride_user = {
+            name: $(this).data('ride-user-name'),
+            avatar: $(this).data('ride-user-avatar'),
+        },
         ride_point = $(this).data('ride-point'),
         ride_campus = $(this).data('ride-campus');
 
@@ -15,13 +18,7 @@ function rideOnMap( parentSelector ) {
         return;
     }
 
-    ride_user = {
-        ID: ride_user,
-        name: ride_user_name,
-        avatar: ride_user_avatar,
-    }
-
-    openRideModal( route_id, route_description, route_point, route_campus, route_is_driver, ride_user, ride_point, ride_campus );
+    openRideModal( type, route_id, route_description, route_point, route_campus, route_is_driver, ride_id, ride_user, ride_point, ride_campus );
 }
 
 function ridesEvents() {
@@ -112,16 +109,15 @@ function searchRides() {
 }
 
 function createRideItem( content, type ) {
-    var name = content.firstName,
+    var name = content.displayName,
         place = ( type == 'return' ) ? content.returnPlace : content.startPlace,
         time = ( type == 'return' ) ? content.returnTime : content.startTime,
         campus = content.campusName,
-        ride_user = content.userId,
-        ride_user_name = content.displayName,
+        ride_id = content.ID,
         ride_user_avatar = content.avatar,
         message = '',
         ride_point = '',
-        attrs = 'data-ride-user="[ride_user]" data-ride-user-name="[ride_user_name]" data-ride-user-avatar="[ride_user_avatar]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
+        attrs = 'data-type="[type]" data-ride-id="[ride_id]" data-ride-user-name="[ride_user_name]" data-ride-user-avatar="[ride_user_avatar]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
 
     if ( type == 'return' ) {
         ride_point = content.returnLat + ',' + content.returnLng;
@@ -141,9 +137,8 @@ function createRideItem( content, type ) {
         }
     }
 
-
     message = message.replace( '[name]', name ).replace( '[place]', place ).replace( '[time]', time ).replace( '[campus]', campus );
-    attrs = attrs.replace( '[ride_user]', ride_user ).replace( '[ride_user_name]', ride_user_name ).replace( '[ride_user_avatar]', ride_user_avatar ).replace( '[ride_point]', ride_point ).replace( '[campus]', campus );
+    attrs = attrs.replace( '[type]', type ).replace( '[ride_id]', ride_id ).replace( '[ride_user_name]', name ).replace( '[ride_user_avatar]', ride_user_avatar ).replace( '[ride_point]', ride_point ).replace( '[campus]', campus );
 
     return '<li class="list-group-item list-group-item-action" ' + attrs + ' title="Ver no mapa">' + message + '</li>';
 }
