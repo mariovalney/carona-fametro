@@ -23,6 +23,10 @@ button {
 .pb_section_with_padding {
     padding-top: 10em;
     padding-bottom: 15em;
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 7em;
+    }
 }
 
 .margin-bottom {

@@ -1,0 +1,91 @@
+.ride-user-wrapper {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    > img {
+        height: 200px;
+        border-radius: 100%;
+    }
+
+    > div {
+        padding-left: 30px;
+
+        p {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .bio {
+            font-style: italic;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .mail {
+            text-decoration: underline;
+        }
+
+        .phone {
+
+        }
+    }
+
+    &.only-bio {
+        margin-top: 50px;
+        margin-bottom: 0;
+
+        > img {
+            height: 100px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        display: block;
+        text-align: center;
+
+        img {
+            margin: 0 auto 20px;
+            display: block;
+            height: 100px;
+        }
+
+        > div {
+            padding: 0;
+        }
+    }
+}
+
+.show-invite-route-panel {
+    display: block;
+    margin: 5px 0 0;
+    text-align: right;
+
+    a {
+        font-style: italic;
+        font-size: 14px;
+    }
+}
+
+#invite-route-panel {
+    width: 100%;
+    display: none;
+    margin: 40px 0 20px;
+
+    .adp-directions {
+        width: 100%;
+    }
+}
+
+.invite-form {
+    display: block;
+    margin: 50px 0 0;
+}

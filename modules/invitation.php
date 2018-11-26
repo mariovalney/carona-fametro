@@ -21,7 +21,15 @@ class Invitation {
 
     private $ride;
 
-    public function __construct( $type, Route $route, Route $ride ) {
+    public function __construct( $type, Route $route = null, Route $ride = null ) {
+        if ( is_object( $type ) && is_a( $type, 'Avant\Modules\Entities\Invite' ) ) {
+            $this->type = $type->type;
+            $this->route = json_decode( $type->route );
+            $this->ride = json_decode( $type->ride );
+
+            return;
+        }
+
         $this->type = $type;
         $this->route = $route;
         $this->ride = $ride;
@@ -68,6 +76,44 @@ class Invitation {
         }
 
         $invite->sendedMails = (int) $invite->sendedMails + 1;
+        $invite->save();
+
+        return true;
+    }
+
+    public function accept() {
+        $invite = $this->getInvite();
+
+        if ( empty( $invite->ID ) ) {
+            throw new \Exception( __( 'Convite inválido' ) );
+        }
+
+        if ( $invite->isAccepted ) {
+            throw new \Exception( __( 'Convite já foi aceito' ) );
+        }
+
+        $to = $this->createAcceptMailTo( $invite );
+        $subject = $this->createAcceptMailSubject( $invite );
+        $body = $this->createAcceptMailContent( $invite );
+
+        // Invalid Invite
+        if ( empty( $body ) ) {
+            throw new \Exception( __( 'Não foi possível enviar o e-mail com a confirmação' ) );
+        }
+
+        // Try send mail
+        try {
+            $sender = new Sender();
+            $result = $sender->send( $to, $subject, $body );
+        } catch (Exception $e) {
+            error_log( 'Erro ao enviar confirmação: ' . $e->getMessage() );
+        }
+
+        if ( ! $result ) {
+            throw new \Exception( __( 'Não foi possível enviar o e-mail com a confirmação' ) );
+        }
+
+        $invite->isAccepted = 1;
         $invite->save();
 
         return true;
@@ -129,6 +175,46 @@ class Invitation {
 
         $message .= '<p>&nbsp;</p>';
         $message .= '<p>' . __( 'Clique no botão abaixo para ver os detalhes e confirmar o convite:' ) . '</p>';
+        $message .= '<a href="' . $link . '" style="display: block; background: #1D82FF; color: #FFFFFF; padding: 15px 20px; text-align: center; font-size: 22px; text-decoration: none">' . __( 'Ver convite' ) . '</a>';
+        $message .= '<p>&nbsp;</p>';
+        $message .= '<p>' . sprintf( 'Copie o link a seguir para o navegador, caso não consiga clicar no botão: %s', '<span style="color: blue; text-decoration: underline; display: block;">' . $link . '</span>' ) . '</p>';
+
+        return $message;
+    }
+
+    private function createAcceptMailTo( Invite $invite ) {
+        $route = json_decode( $invite->route );
+        $user = get_user_by( 'ID', $route->userId );
+
+        return ( empty( $user->email ) ) ? '' : $user->email;
+    }
+
+    private function createAcceptMailSubject( Invite $invite ) {
+        $ride = json_decode( $invite->ride );
+
+        return ( $ride->isDriver ) ? __( 'Carona Fametro - Pedido de Carona Aceito' ) : __( 'Carona Fametro - Convite de Carona Aceito' );
+    }
+
+    private function createAcceptMailContent( Invite $invite ) {
+        $ride = json_decode( $invite->ride );
+
+        $ride_user = get_user_by( 'ID', ( $ride->userId ?? 0 ) );
+
+        if ( empty( $ride_user ) || empty( $ride_user->firstName ) ) {
+            return '';
+        }
+
+        $message = '<h1>' . sprintf( __( 'Olá, %s!' ), $ride_user->firstName ) . '</h1>';
+        if ( $ride->isDriver ) {
+            $message .= '<p>' . __( 'Seu pedido de carona foi aceito.' ) . '</p>';
+        } else {
+            $message .= '<p>' . __( 'Seu convite de carona foi aceito.' ) . '</p>';
+        }
+
+        $link = BASE_URL . 'convite/' . $invite->ID;
+
+        $message .= '<p>&nbsp;</p>';
+        $message .= '<p>' . __( 'Clique no botão abaixo para ver as informações de contato do seu colega:' ) . '</p>';
         $message .= '<a href="' . $link . '" style="display: block; background: #1D82FF; color: #FFFFFF; padding: 15px 20px; text-align: center; font-size: 22px; text-decoration: none">' . __( 'Ver convite' ) . '</a>';
         $message .= '<p>&nbsp;</p>';
         $message .= '<p>' . sprintf( 'Copie o link a seguir para o navegador, caso não consiga clicar no botão: %s', '<span style="color: blue; text-decoration: underline; display: block;">' . $link . '</span>' ) . '</p>';

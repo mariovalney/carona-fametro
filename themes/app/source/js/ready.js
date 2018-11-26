@@ -7,8 +7,10 @@ jQuery(document).ready(function($) {
     modalEvents();
     routesEvents();
     ridesEvents();
+    inviteEvents();
 
     mapsRoutes();
+    mapsInvite();
 
     searchRides();
 
