@@ -51,51 +51,20 @@ class Phpgeo {
         return $centroid;
     }
 
-    /**
-     * Valid Directions:
-     *
-     * 0 - none
-     * 1 - north
-     * 2 - northwest
-     * 3 - northeast
-     * 4 - south
-     * 5 - southeast
-     * 6 - southwest
-     * 7 - west
-     * 8 - east
-     */
-    public static function calculatePolygonVerticesFromRoute( $maneuvers ) {
-        $polygon = new Polygon();
-        $inverseCoordinates = [];
+    public static function calculateTheBigSquareFromManeuvers( $maneuvers ) {
+        $minLat = $maneuvers[0]->startPoint->lat;
+        $maxLat = $maneuvers[0]->startPoint->lat;
+        $minLng = $maneuvers[0]->startPoint->lng;
+        $maxLng = $maneuvers[0]->startPoint->lng;
 
-        $maneuvers = array_values( $maneuvers );
-
-        $perpendiculars = [];
-        foreach ( $maneuvers as $key => $maneuver ) {
-            if ( $key == 0 ) continue;
-
-            $last_maneuver = $maneuvers[ $key - 1 ];
-
-            $pointA = [ $last_maneuver->startPoint->lat, $last_maneuver->startPoint->lng ];
-            $pointB = [ $maneuver->startPoint->lat, $maneuver->startPoint->lng ];
-
-            $perpendicular = self::getPerpendicularPoints( $pointA, $pointB );
-            $perpendiculars[] = [ $maneuver->direction, $perpendicular];
-
-            $direction = ( $last_maneuver->direction >= $maneuver->direction ) ? 0 : 1;
-            $inverse = ( $direction ) ? 0 : 1;
-
-            $polygon->addPoint( self::createCoordinate( $perpendicular[ $direction ] ) );
-            $inverseCoordinates[] = self::createCoordinate( $perpendicular[ $inverse ] );
+        foreach ( $maneuvers as $maneuver ) {
+            $minLat = min( $minLat, $maneuver->startPoint->lat );
+            $maxLat = max( $maxLat, $maneuver->startPoint->lat );
+            $minLng = min( $minLng, $maneuver->startPoint->lng );
+            $maxLng = max( $maxLng, $maneuver->startPoint->lng );
         }
 
-        $inverseCoordinates = array_reverse( $inverseCoordinates );
-
-        foreach ( $inverseCoordinates as $coordinate ) {
-            $polygon->addPoint( $coordinate );
-        }
-
-        exit;
+        return [ [ $minLat, $minLng ], [ $maxLat, $maxLng ] ];
     }
 
     public static function createCoordinate( $value ) {
@@ -116,40 +85,5 @@ class Phpgeo {
         }
 
         return false;
-    }
-
-    /**
-     * Get the third coordinate of a triangle (positive and negative axis),
-     * if we know the points A and B and we C is perpendicular to B.
-     *
-     * @link https://math.stackexchange.com/questions/3007159/third-cordinate-of-a-triangle-when-we-know-two-sides-and-two-other-points/3007187#3007187
-     */
-    private static function getPerpendicularPoints( $pointA, $pointB ) {
-        $width = self::KM_IN_COORD_DISTANCE * 0.05;
-
-        // A Point
-        $ax = $pointA[0];
-        $ay = $pointA[1];
-
-        // B Point
-        $bx = $pointB[0];
-        $by = $pointB[1];
-
-        // Slope of AB and BC
-        $mab = ( $by - $ay ) / ( $bx - $ax );
-        $mbc = -1 * ( 1 / $mab );
-
-        // Angle from BC to horizontal axis
-        $angle = atan( $mbc );
-
-        // Moving from B in positive X
-        $cx = $bx + $width * cos( $angle );
-        $cy = $by + $width * sin( $angle );
-
-        // Moving from B in negative X
-        $cx2 = $bx - $width * cos( $angle );
-        $cy2 = $by - $width * sin( $angle );
-
-        return [ [ $cx, $cy ], [ $cx2, $cy2 ] ];
     }
 }
