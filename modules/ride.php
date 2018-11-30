@@ -72,7 +72,13 @@ class Ride {
         /**
          * Add filtering by route
          */
-        $direction = Mapquest::getRoute( $point, $this->getClusterCenter() );
+        $direction_cache = 'direction-' . $this->route->ID . '-' . $type;
+        $direction = get_cache( $direction_cache );
+
+        if ( empty( $direction ) ) {
+            $direction = Mapquest::getRoute( $point, $this->getClusterCenter() );
+            create_cache( $direction_cache, $direction );
+        }
 
         $sql = false;
         try {
@@ -95,6 +101,7 @@ class Ride {
         $query .= ' ORDER BY RAND() LIMIT 5';
 
         $rides = Database::instance()->query( $query, $values );
+        $rides = ( ! empty( $rides ) ) ? $rides : [];
 
         if ( count( $rides ) >= 5 ) {
             return $rides;
@@ -111,6 +118,7 @@ class Ride {
         $the_query .= ' ORDER BY RAND() LIMIT ' . ( 5 - count( $rides ) );
 
         $other_rides = Database::instance()->query( $the_query, $the_values );
+        $other_rides = ( ! empty( $other_rides ) ) ? $other_rides : [];
 
         return array_merge( $rides, $other_rides );
     }

@@ -69,3 +69,19 @@ DEFAULT CHARSET=utf8
 COLLATE=utf8_general_ci
 COMMENT='Invites';
 ```
+
+## Creating table cache
+
+```
+CREATE TABLE cache (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    cache_key varchar(100) NOT NULL,
+    cache_value LONGTEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT cache_PK PRIMARY KEY (ID)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci
+COMMENT='Cache';
+```
