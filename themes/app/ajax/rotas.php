@@ -80,7 +80,7 @@ if ( ! $allRoutes ) {
     $result = $route->save();
 
     if ( ! empty( $route->ID ) ) {
-        $route->ID = $result;
+        clear_route_cache( $route->ID );
 
         av_send_json( array(
             'title'     => __( 'Rota salva!' ),
@@ -103,6 +103,7 @@ for ($i = 0; $i < 7; $i++) {
     $route->dow = $i;
 
     if ( $route->save() ) {
+        clear_route_cache( $route->ID );
         $success++;
     }
 }

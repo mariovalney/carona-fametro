@@ -46,3 +46,11 @@ function get_campus_for_options() {
         return $campus['name'];
     }, $default_campus );
 }
+
+function clear_route_cache( $routeId ) {
+    $key = \Avant\Modules\Ride::createDirectionCacheKey( $routeId, 'start' );
+    delete_cache( $key );
+
+    $key = \Avant\Modules\Ride::createDirectionCacheKey( $routeId, 'return' );
+    delete_cache( $key );
+}

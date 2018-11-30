@@ -25,5 +25,5 @@ function get_cache( $key, $single = true ) {
 function delete_cache( $key ) {
     global $avdb;
 
-    $avdb->delete( 'cache', [ 'cache_key' => $key ] );
+    return $avdb->delete( 'cache', [ 'cache_key' => $key ] );
 }

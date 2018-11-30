@@ -72,7 +72,7 @@ class Ride {
         /**
          * Add filtering by route
          */
-        $direction_cache = 'direction-' . $this->route->ID . '-' . $type;
+        $direction_cache = self::createDirectionCacheKey( $this->route->ID, $type );
         $direction = get_cache( $direction_cache );
 
         if ( empty( $direction ) ) {
@@ -111,7 +111,7 @@ class Ride {
             return $route->ID;
         }, $rides );
 
-        if ( ! empty( $rides ) ) {
+        if ( ! empty( $route_ids ) ) {
             $the_query .= ' AND routes.ID IS NOT IN (' . implode( ',', $route_ids ) . ')';
         }
 
@@ -172,6 +172,10 @@ class Ride {
         $values = array( $square[0][0], $square[1][0], $square[0][1], $square[1][1] );
 
         return [ $sql, $values ];
+    }
+
+    public static function createDirectionCacheKey( $routeId, $type ) {
+        return 'direction-' . $routeId . '-' . $type;
     }
 
     /**
