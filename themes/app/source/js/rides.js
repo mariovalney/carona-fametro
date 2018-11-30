@@ -109,12 +109,12 @@ function searchRides() {
 }
 
 function createRideItem( content, type ) {
-    var name = content.displayName,
+    var name = content.displayName || '',
         place = ( type == 'return' ) ? content.returnPlace : content.startPlace,
         time = ( type == 'return' ) ? content.returnTime : content.startTime,
         campus = content.campusName,
         ride_id = content.ID,
-        ride_user_avatar = content.avatar,
+        ride_user_avatar = content.avatar || '',
         message = '',
         ride_point = '',
         attrs = 'data-type="[type]" data-ride-id="[ride_id]" data-ride-user-name="[ride_user_name]" data-ride-user-avatar="[ride_user_avatar]" data-ride-point="[ride_point]" data-ride-campus="[campus]"';
