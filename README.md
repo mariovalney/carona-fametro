@@ -2,6 +2,8 @@
 
 Welcome to the Source.
 
+https://www.useloom.com/share/c1f97813541b4194bf1f68cac181975e
+
 ## Setup de Desenvolvimento
 
 Usamos o Docker e o Docker-Compose.
@@ -14,7 +16,7 @@ PHP Version: 7.1
 MySQL Version: 5.7.18
 ```
 
-### Config File
+### Configuração
 
 Adicione um arquivo `config.php` ao lado do `docker-compose.yml` com as configurações do Avant para o seu ambiente local. Use `config.sample.php` como base.
 
@@ -26,7 +28,7 @@ Use o comando `docker-compose up`.
 
 Rode `npm install` e `composer install`.
 
-### Problemas?
+## Problemas?
 
 Se tiver problemas com permissão de pasta, não esqueça de adicionar o seu usuário ao grupo `www-data` e definir o dono do repositório como `usuario:www-data`.
 
